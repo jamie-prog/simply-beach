@@ -356,6 +356,8 @@
               height="{{ section.settings.logo.height }}"
               alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
             >
+          {%- elsif section.settings.get_logo_theme_asset and section.settings.logo_asset_name != blank -%}
+              <img src="{{section.settings.logo_asset_name | asset_url }}" class="header_heading-logo" alt="{{shop.name | escape}}" width="{{section.settings.logo_width}}">
           {%- else -%}
             <span class="h2">{{ shop.name }}</span>
           {%- endif -%}
@@ -742,16 +744,31 @@
       "label": "t:sections.all.colors.label"
     },
     {
+      "type":"header", 
+      "content":"Logo"
+    },
+    {
       "type": "image_picker",
       "id": "logo",
       "label": "t:sections.header.settings.logo.label"
     },
     {
+      "type": "checkbox",
+      "id": "get_logo_theme_asset",
+      "label": "Get logo from theme asset",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "logo_asset_name",
+      "label": "Asset file name"
+    },
+    {
       "type": "range",
       "id": "logo_width",
       "min": 50,
-      "max": 250,
-      "step": 10,
+      "max": 500,
+      "step": 5,
       "default": 100,
       "unit": "t:sections.header.settings.logo_width.unit",
       "label": "t:sections.header.settings.logo_width.label"
