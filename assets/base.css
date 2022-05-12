@@ -213,7 +213,7 @@ html.no-js .no-js-hidden {
 .page-width {
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 15px;
 }
 
 .page-width-desktop {
@@ -223,7 +223,7 @@ html.no-js .no-js-hidden {
 
 @media screen and (min-width: 750px) {
   .page-width {
-    padding: 0 5rem;
+    padding: 0 10px;
   }
 
   .page-width--narrow {
@@ -2133,15 +2133,24 @@ input[type='checkbox'] {
   z-index: 4;
 }
 
+.announcement-bar-wrapper{
+  padding: 3px 0;
+}
+
 .announcement-bar {
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
   color: rgb(var(--color-foreground));
+  font-size: 0.93333rem;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
 }
-
+.announcement-bar:not(:last-child){
+  border-right: 1px solid #fff; 
+}
 .announcement-bar__link {
   display: block;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 5px 2rem;
   text-decoration: none;
 }
 
