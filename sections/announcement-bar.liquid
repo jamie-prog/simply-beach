@@ -1,10 +1,10 @@
-<section class="color-{{ section.settings.color_scheme }}" data-section-type="announcement-bar">
+<announcement-bar class="color-{{ section.settings.color_scheme }}" data-section-type="announcement-bar">
   <div class="page-width">
     <div class="announcement-bar-wrapper grid">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'announcement' -%}
-            <div class="announcement-bar gradient grid--{{section.blocks.size}}-col grid__item" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
+            <div class="{% unless forloop.first %}mobile-hide{% endunless %} announcement-bar gradient grid--{{section.blocks.size}}-col grid__item" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
               {%- if block.settings.text != blank -%}
                 {%- if block.settings.link != blank -%}
                   <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
@@ -21,12 +21,12 @@
       {%- endfor -%}
     </div>
   </div>
-</section>
+</announcement-bar>
 
 {% schema %}
 {
   "name": "t:sections.announcement-bar.name",
-  "max_blocks": 12,
+  "max_blocks": 3,
   "settings":[
     {
       "type": "select",

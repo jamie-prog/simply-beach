@@ -899,3 +899,38 @@ class VariantRadios extends VariantSelects {
 }
 
 customElements.define('variant-radios', VariantRadios);
+
+/*======================================================
+Custom Scripts
+========================================================*/
+// Script for AnnouncementBar
+class AnnouncementBar extends HTMLElement{
+  constructor(){
+    super();
+    this.initialItemIndex = 0; 
+    this.nextItemIndex = 1;
+    this.announcementItemNodeList = this.querySelectorAll(".announcement-bar");
+    this.announcementItemNodeCount = this.announcementItemNodeList.length;
+  }
+  connectedCallback(){
+    setInterval(()=>{
+      this.announcementItemNodeList[this.initialItemIndex].classList.remove("mobile-show");
+      this.announcementItemNodeList[this.initialItemIndex].classList.add("mobile-hide");
+
+      this.announcementItemNodeList[this.nextItemIndex].classList.remove("mobile-hide");
+      this.announcementItemNodeList[this.nextItemIndex].classList.add("mobile-show");
+      
+      this.initialItemIndex = this.initialItemIndex + 1; 
+      if(this.initialItemIndex < this.announcementItemNodeCount - 1 ){
+        this.nextItemIndex = this.initialItemIndex + 1; 
+      } else if(this.initialItemIndex == this.announcementItemNodeCount - 1 ){
+        this.nextItemIndex = 0; 
+      } else {
+        this.initialItemIndex = 0; 
+        this.nextItemIndex = this.initialItemIndex + 1; 
+      }
+    }, 2000);
+  }
+}
+
+customElements.define('announcement-bar', AnnouncementBar);

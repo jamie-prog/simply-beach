@@ -2882,3 +2882,54 @@ details-disclosure > details {
 .font-body-bold {
   font-weight: var(--font-body-weight-bold);
 }
+
+/*============================
+ Custom Base Styles 
+==============================*/
+/* Announcement Bar */
+announcement-bar{
+  display: block;
+}
+
+@keyframes show{
+  0% {opacity: 0; visibility: hidden;}
+  75%{opacity: 0.75;}
+  100% {opacity: 1; visibility: visible; display: block !important;}
+}
+
+@keyframes hide{
+  0% {opacity: 1; visibility: visible;}
+  75% {opacity: 0.25; }
+  100% {opacity: 0; visibility: hidden; display: none !important; }
+}
+
+@media only screen and (max-width: 1099px){
+  .announcement-bar{
+    flex: 1 1 100%; 
+    max-width: 100%; 
+    width: 100%; 
+    text-align: center; 
+  }
+
+  .announcement-bar:not(:last-child){
+    border: none; 
+  }
+  .announcement-bar.mobile-show{
+    display: block;
+    animation-name: show;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+  }
+  .announcement-bar.mobile-hide{
+    display: none;
+    animation-name: hide; 
+    animation-duration: 0.2s; 
+    animation-fill-mode: forwards;
+  }
+}
+
+@media only screen and (max-width: 767px){
+  .announcement-bar{
+    font-size: .66667rem;
+  }
+}
