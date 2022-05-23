@@ -27,8 +27,12 @@ class PredictiveSearch extends HTMLElement {
   }
 
   onChange() {
+    if(this.input.value){
+      this.input.closest(".search-field").classList.add("active");
+    }else{
+      this.input.closest(".search-field").classList.remove("active");
+    }
     const searchTerm = this.getQuery();
-
     if (!searchTerm.length) {
       this.close(true);
       return;
