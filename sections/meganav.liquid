@@ -1,0 +1,538 @@
+<link rel="stylesheet" href="{{'component-meganav.css' | asset_url}}"  media="print" onload="this.media='all'">
+<mega-nav 
+  data-section-id="{{section.id}}" 
+  data-section-type = "meganav" 
+  data-target-menu = "header-main-menu" 
+  data-parent-nav-class = "site-top-nav__list"
+  data-mega-selector-attr = "data-menu-list">
+  <div class="page-width">
+    {% for block in section.blocks %}
+      {% assign imageBlock = false %}
+      <div class="meganav" data-meganav-child='{{ block.settings.meganav_parent | handle }}' {{ block.shopify_attributes }}>
+        {% assign noDropdowns = forloop.length %}
+        {% capture colWidth %}
+  
+          {% for i in (1..4) %}
+            {% assign meganav_col_show = 'meganav_col_show_' | append: i %}
+            {% assign meganav_image_show = 'meganav_image_show_' | append: i %}
+  
+            {% if block.settings[meganav_col_show] == true %}
+                {% assign colCount = i %}
+  
+                {% if block.settings[meganav_image_show] == true %}
+                  {% assign dropdownType = i %}
+                {% else %}
+                  {% assign dropdownType = 0 %}
+                {% endif %}
+            {% endif %}
+          {% endfor %}
+  
+          
+          {% if colCount == 1 %}
+            medium-up--one-half
+          {% elsif colCount == 2 %}
+            {% if dropdownType == 2 %}
+              mega-nav--two-image
+            {% else %}
+              medium-up--one-half
+            {% endif %}
+          {% elsif colCount == 3 %}
+            {% if dropdownType == 3 %}
+              mega-nav--three-image
+            {% else %}
+              medium-up--one-third test-{{ dropdownType }}
+            {% endif %}
+          {% elsif colCount >= 4 %}
+            {% if dropdownType == 4 %}
+              mega-nav--four-image
+            {% else %}
+              medium-up--one-quarter
+            {% endif %}
+          {% endif %}
+        {% endcapture %}
+  
+  
+        <div class="grid grid--gapless">
+          {% for i in (1..4) %}
+            {% assign meganav_col_show = 'meganav_col_show_' | append: i %}
+            {% assign meganav_image_show = 'meganav_image_show_' | append: i %}
+            {% assign meganav_col_title_link = 'meganav_linklist_title_link_' | append: i %}
+  
+            {% if block.settings[meganav_col_show] == true %}
+              {% assign i = forloop.index %}
+              {% assign meganav_image = 'meganav_image_' | append: i %}
+              {% assign meganav_linklist = 'meganav_linklist_' | append: i %}
+              {% assign childlist = block.settings[meganav_linklist] %}
+  
+              <div class="meganav__col {{ colWidth | strip }}
+                {% if block.settings[meganav_image] != blank and block.settings[meganav_image_show] == true %}
+                    meganav__col--image
+                  {% else %}
+                    meganav__col--list
+                {% endif %}
+                ">
+                {% if block.settings[meganav_image] != blank and block.settings[meganav_image_show] == true %}
+                  {% assign imageBlock = true %}
+                  {% if block.settings[meganav_image_show] == true %}
+                      
+                    {%comment%}Start of section for the image tooltips{%endcomment%}
+                    {% if block.settings.meganav_tooltip_show == true %}
+                      {% if block.settings.meganav_tooltip_is_product == true %}
+                              {% assign tooltip_item = all_products[block.settings.meganav_tooltip_product] %}
+                              {% assign tooltip_title = tooltip_item.vendor | append: ' ' | append: tooltip_item.title %}
+                        <a class="meganav__hotspot-tooltip {{block.settings.meganav_tooltip_position}}" href='{{ tooltip_item.url }}'>
+                                {% include 'icon-hotspot-plus' %}
+                                <span class="meganav__hotspot-tooltiptext">
+                                  {{ tooltip_title | truncate: 50 }}<strong>{{ tooltip_item.price | money }}</strong>{% include 'icon-hotspot-forward' %}
+                                </span>
+                        </a>
+                      {% else %}
+                        <a class="meganav__hotspot-tooltip {{block.settings.meganav_tooltip_position}}" href='{{ block.settings.meganav_tooltip_link }}'>
+                                {% include 'icon-hotspot-plus' %}
+                                <span class="meganav__hotspot-tooltiptext">
+                                  {{ block.settings.meganav_tooltip_title }}<strong>{{ block.settings.meganav_tooltip_subtitle }}</strong>{% include 'icon-hotspot-forward' %}
+                                </span>
+                        </a>
+                      {% endif %}
+                    {% endif %}
+                    {%comment%}End of section for the image tooltips{%endcomment%}
+                    
+                    <img src="{{ block.settings[meganav_image] | img_url: 'master'}}" onclick="location.href='{{ block.settings[meganav_col_title_link] }}';" />
+                
+                  {% endif %}
+                {% else %}
+                  {% if block.settings.meganav_top_title_show %}
+                  <div class="meganav__title--wrapper">
+                    {% if forloop.first == true or imageBlock == true and forloop.index == 2 %}
+                    <h4 class="meganav__title"><a href="{{ block.settings.meganav_linklist_title_link }}">{{ block.settings.meganav_linklist_title_text }}</a></h4>
+                    {% else %}
+                    <h4 class="meganav__title">&nbsp;</h4>
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                  <ul class="clearfix">
+                    <li>
+                      {% if block.settings.meganav_linklist_title_show %}
+                      <div class="meganav__title--wrapper">
+                        <h4 class="meganav__title"><a href="{{ block.settings[meganav_col_title_link] }}" target="{{ block.settings[meganav_col_link_target] }}">{{ linklists[childlist].title }}</a></h4>
+                      </div>
+                      {% endif %}
+                    </li>
+                    {% for link in linklists[childlist].links %}
+                    <li><a href="{{ link.url }}" target="{{ block.settings[meganav_col_link_target] }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <span class="meganav--tablet-close">CLOSE</span>
+      </div>
+    {% endfor %}
+  </div>
+</mega-nav>
+
+{% comment %} MOBILE {% endcomment %}
+<nav class="mobile-nav-wrapper hidden" role="navigation">
+  <ul id="MobileNav" class="mobile-nav">
+    <li class="mobile-nav__item--header border-bottom">
+      <div class="grid grid--table grid--no-gutters">
+        <div class="grid__item eight-twelfths mobile-nav__search">
+          {% include 'search-form' %}
+        </div>
+        <div class="grid__item four-twelfths">
+          {%- comment -%}
+          {% include 'currency-picker' with 'mobile' %}
+          {%- endcomment -%}
+        </div>
+        <div class="grid__item two-twelfths">
+          <button type="button" class="btn--link js-mobile-nav-toggle--inside-menu mobile-nav__close">
+            {% include 'icon-close' %}
+          </button>
+        </div>
+      </div>
+    </li>
+    <li class="mobile-nav__item mobile-nav__item__parent mobile-nav__item--no-dropdown border-bottom">
+      <h4><a href="/">Home</a></h4>
+    </li>
+    {% for link in linklists.main-menu.links %}
+      {% assign hasDropdown = false %}
+      {% for block in section.blocks %}
+        {% assign parentHandle = block.settings.meganav_parent | handle %}
+        {% if parentHandle != link.handle %}
+          {% if forloop.last == true and hasDropdown != true %}
+            <li class="mobile-nav__item mobile-nav__item__parent mobile-nav__item--no-dropdown border-bottom">
+              <h4><a href="{{ link.url }}">{{link.title}}</a></h4>
+            </li>
+          {% endif %}
+        {% else %}
+          {% assign hasDropdown = true %}
+          <li class="mobile-nav__item mobile-nav__item__parent border-bottom">
+            <h4>{% include 'icon-chevron-down' %}<a href="#">{{link.title}}</a></h4>
+          </li>
+          <li class="mobile-nav__item mobile-nav__item__dropdown border-bottom">
+            <ul class="mobile-nav__dropdown" data-parent="{{ child_list_handle }}" data-level="2">
+              <li class="mobile-nav__item border-bottom mobile-nav__item__child">
+                {% for i in (1..4) %}
+                  {% assign meganav_text = 'meganav_custom_content_' | append: i %}
+                  {% if block.settings[meganav_text] != blank %}
+                    <div class="meganav__col__content">
+                      {{ block.settings[meganav_text] }}
+                    </div>
+                  {% else %}
+                    {% assign meganav_col_show = 'meganav_col_show_' | append: i %}
+                    {% if block.settings[meganav_col_show] == true %}
+                      {% assign i = forloop.index %}
+                      {% assign meganav_image = 'meganav_image_' | append: i %}
+                      {% assign meganav_linklist = 'meganav_linklist_' | append: i %}
+                      {% assign childlist = block.settings[meganav_linklist] %}
+                
+                    {% assign meganav_hreflist = 'meganav_linklist_title_link_' | append: i %}
+                      {% assign urllist = block.settings[meganav_hreflist] %}
+
+                      {% if block.settings.meganav_top_title_show %}
+                        {% if forloop.first == true %}
+                          <div class="mobile-nav__title--wrapper">
+                            <h4 class="mobile-nav__title"><a href="{{block.settings['meganav_linklist_title_link']}}"  target="{{ block.settings[meganav_col_link_target] }}">{{block.settings['meganav_linklist_title_text']}}</a></h4>
+                          </div>
+                        {% endif %}
+                      {% endif %}
+                
+                      {% for link in linklists[childlist].links %}
+                        {% if block.settings.meganav_linklist_title_show %}
+                          {% if forloop.first == true %}
+                            <div class="mobile-nav__title--wrapper">
+                              <h4 class="mobile-nav__title"><a href="{{urllist}}" target="{{ block.settings[meganav_col_link_target] }}">{{ linklists[childlist].title }}</a></h4>
+                            </div>
+                          {% endif %}
+                        {% endif %}
+                        <a href="{{ link.url }}" target="{{ block.settings[meganav_col_link_target] }}">{{ link.title }}</a>
+                      {% endfor %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </li>
+            </ul>
+          </li>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </ul>
+  <div class="mobile-nav__navspacer"></div>
+</nav>
+<script>
+  class MegaNav extends HTMLElement{
+    constructor(){
+      super();
+      this.targetMenuEl = document.querySelector(`[data-menu-name="${this.getAttribute('data-target-menu')}"]`);
+      this.parentNavs = this.targetMenuEl.querySelectorAll(`.${this.getAttribute('data-parent-nav-class')}`);
+      this.megaSelectorAttr = this.getAttribute("data-mega-selector-attr");
+      this.megaNavs = this.querySelectorAll('.meganav');
+
+      // Open Megamenu
+      this.parentNavs.forEach((parentNav) =>{
+        parentNav.addEventListener('mouseenter', ()=>{
+          let targetMegaAttrVal = parentNav.getAttribute(this.megaSelectorAttr);
+          let targetMega = document.querySelector(`[data-meganav-child = "${targetMegaAttrVal}"]`);
+          let oldActivedMega = this.querySelector(".meganav.active");
+          if(targetMega){
+            if(oldActivedMega && oldActivedMega != targetMega){
+              oldActivedMega.classList.remove('active');
+              this.openMegaNav(targetMega);
+            }else{
+              this.openMegaNav(targetMega);
+            }
+          }else if(oldActivedMega){
+            oldActivedMega.classList.remove('active');
+          }
+        });
+      });
+
+      // Close Meganav
+      this.megaNavs.forEach((meganav) =>{
+        meganav.addEventListener('mouseleave', (e)=>{
+          this.closeMegaNav(meganav);
+        })
+
+        meganav.querySelector(".meganav--tablet-close").addEventListener('click', ()=>{
+          this.closeMegaNav(meganav);
+        });
+      });
+
+    }
+
+    connectedCallback(){
+      this.querySelectorAll(".meganav").forEach((meganav) =>{
+        let targetAttribute = meganav.getAttribute("data-meganav-child");
+        let targetNav = document.querySelector(`[data-menu-list = "${targetAttribute}"]`);
+        if(targetNav){
+          targetNav.classList.add('has-megamenu');
+        }
+
+        // Get last list element of mega item 
+        let lastListIndex = meganav.querySelectorAll(".meganav__col--list").length - 1; 
+        meganav.querySelectorAll(".meganav__col--list")[lastListIndex].classList.add('meganav__col--list-last');
+      })
+    }
+
+    openMegaNav(megaItem){
+      // Open new meganav
+      this.setPosition();
+      megaItem.classList.add('active');
+    }
+
+    closeMegaNav(megaItem){
+      megaItem.classList.remove('active');
+    }
+
+    setPosition(){
+      this.style.top = this.targetMenuEl.getBoundingClientRect().bottom + 2 + 'px';
+    }
+  }
+
+  customElements.define('mega-nav', MegaNav);
+</script>
+{% schema %}
+  {
+    "name": "Mega Nav",
+    "settings": [
+      {
+        "type": "text",
+        "id": "meganav",
+        "label": "Heading",
+        "default": "Mega Nav"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "meganav_dropdown",
+        "name": "Dropdown",
+        "settings": [
+          {
+            "type": "text",
+            "id": "meganav_parent",
+            "label": "Which menu item does this dropdown belong to?"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_top_title_show",
+            "label": "Show title for entire dropdown"
+          },
+          {
+            "type": "text",
+            "id": "meganav_linklist_title_text",
+            "label": "Title Text"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_linklist_title_show",
+            "label": "Show each menu's title (set in navigation admin)"
+          },
+          {
+            "type": "url",
+            "id": "meganav_linklist_title_link",
+            "label": "Link Menu Title"
+          },
+          {
+            "type": "header",
+            "content": "Column 1"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_col_show_1",
+            "label": "Show Column 1"
+          },
+          {
+            "type": "url",
+            "id": "meganav_linklist_title_link_1",
+            "label": "Link Column Title"
+          },
+          {
+            "type": "link_list",
+            "id": "meganav_linklist_1",
+            "label": "Column 1 Menu"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_image_show_1",
+            "label": "Show Column 1 Image (images overide menus)"
+          },
+          {
+            "type": "image_picker",
+            "id": "meganav_image_1",
+            "label": "Image"
+          },
+          {
+            "type": "textarea",
+            "id": "meganav_custom_content_1",
+            "label": "Replace column with text on mobile (HTML allowed)"
+          },
+          {
+            "type": "header",
+            "content": "Column 2"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_col_show_2",
+            "label": "Show Column 2"
+          },
+          {
+            "type": "url",
+            "id": "meganav_linklist_title_link_2",
+            "label": "Link Column Title"
+          },
+          {
+            "type": "link_list",
+            "id": "meganav_linklist_2",
+            "label": "Column 2 Menu"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_image_show_2",
+            "label": "Show Column 2 Image (images overide menus)"
+          },
+          {
+            "type": "image_picker",
+            "id": "meganav_image_2",
+            "label": "Image"
+          },
+          {
+            "type": "textarea",
+            "id": "meganav_custom_content_2",
+            "label": "Replace column with text on mobile (HTML allowed)"
+          },
+          {
+            "type": "header",
+            "content": "Column 3"
+          },
+          {
+            "type": "url",
+            "id": "meganav_linklist_title_link_3",
+            "label": "Link Column Title"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_col_show_3",
+            "label": "Show Column 3"
+          },
+          {
+            "type": "link_list",
+            "id": "meganav_linklist_3",
+            "label": "Column 3 Menu"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_image_show_3",
+            "label": "Show Column 3 Image (images overide menus)"
+          },
+          {
+            "type": "image_picker",
+            "id": "meganav_image_3",
+            "label": "Image"
+          },
+          {
+            "type": "textarea",
+            "id": "meganav_custom_content_3",
+            "label": "Replace column with text on mobile (HTML allowed)"
+          },
+          {
+            "type": "header",
+            "content": "Column 4"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_col_show_4",
+            "label": "Show Column 4"
+          },
+          {
+            "type": "url",
+            "id": "meganav_linklist_title_link_4",
+            "label": "Link Column Title"
+          },
+          {
+            "type": "link_list",
+            "id": "meganav_linklist_4",
+            "label": "Column 4 Menu"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_image_show_4",
+            "label": "Show Column 4 Image (images overide menus)"
+          },
+          {
+            "type": "image_picker",
+            "id": "meganav_image_4",
+            "label": "Image"
+          },
+          {
+            "type": "textarea",
+            "id": "meganav_custom_content_4",
+            "label": "Replace column with text on mobile (HTML allowed)"
+          },
+          {
+            "type": "header",
+            "content": "Tooltips"
+          },
+          {
+            "type": "checkbox",
+            "id": "meganav_tooltip_show",
+            "label": "Show tooltip?"
+          },
+          {
+            "type": "select",
+            "id": "meganav_tooltip_position",
+            "label": "Tooltip position",
+            "options": [
+            {
+              "value": "hs_bottomleft",
+              "label": "hs_bottomleft"
+            },
+            {
+              "value": "hs_bottommiddle",
+              "label": "hs_bottommiddle"
+            },
+            {
+              "value": "hs_bottomright",
+              "label": "hs_bottomright"
+            }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "If Tooltip Is Product"
+          },
+      {
+            "type": "checkbox",
+            "id": "meganav_tooltip_is_product",
+            "label": "Is Tooltip A Product?"
+          },
+          {
+            "type": "product",
+            "id": "meganav_tooltip_product",
+            "label": "Tooltip Product"
+          },
+          {
+            "type": "header",
+            "content": "If Tooltip Is Not A Product"
+          },
+          {
+            "type": "url",
+            "id": "meganav_tooltip_link",
+            "label": "Link For Tooltip"
+          },
+          {
+            "type": "text",
+            "id": "meganav_tooltip_title",
+            "label": "Title Text"
+          },
+          {
+            "type": "text",
+            "id": "meganav_tooltip_subtitle",
+            "label": "Subtitle Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
