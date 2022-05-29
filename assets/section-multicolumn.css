@@ -1,3 +1,8 @@
+@media only screen and (max-width: 1100px){
+  .multicolumn{
+    display: none; 
+  }
+}
 .multicolumn .title {
   margin: 0;
 }
@@ -20,15 +25,11 @@
     padding-right: 0;
   }
 }
-
-.multicolumn-card__image-wrapper--third-width {
-  width: 33%;
+.multicolumn-card__image-wrapper{
+  flex: 1 1 44px; 
+  max-width: 44px;
+  margin: 0px;  
 }
-
-.multicolumn-card__image-wrapper--half-width {
-  width: 50%;
-}
-
 .multicolumn-list__item.center
   .multicolumn-card__image-wrapper:not(.multicolumn-card__image-wrapper--full-width),
 .multicolumn-list__item:only-child {
@@ -84,8 +85,21 @@
   margin-right: 2.5rem;
 }
 
-.multicolumn-card__info > :nth-child(2) {
-  margin-top: 1rem;
+.multicolumn-card__info{
+  flex: 1 1 calc(100% - 44px); 
+  max-width: calc(100% - 44px);
+  padding: 0 0 0 10px;
+  letter-spacing: 0px; 
+}
+
+.multicolumn-card__info h3{
+  font-size: 1.6rem; 
+}
+
+.multicolumn-card__info .rte{
+  margin-top: 0px; 
+  line-height: 1.2;
+  font-size: 1.4rem; 
 }
 
 .multicolumn-list__item.center .media--adapt,
@@ -132,72 +146,18 @@
   margin: 0;
 }
 
-.multicolumn-card__info {
-  padding: 2.5rem;
-}
-
-.background-none .multicolumn-card__info {
-  padding-top: 0;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.background-none .slider .multicolumn-card__info {
-  padding-bottom: 0;
-}
-
-.background-none .multicolumn-card__image-wrapper + .multicolumn-card__info {
-  padding-top: 2.5rem;
-}
-
-.background-none .slider .multicolumn-card__info {
-  padding-left: 0.5rem;
-}
-
-.background-none
-  .slider
-  .multicolumn-card__image-wrapper
-  + .multicolumn-card__info {
-  padding-left: 1.5rem;
-}
-
-.background-none
-  .multicolumn-list:not(.slider)
-  .center
-  .multicolumn-card__info {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
 
 @media screen and (max-width: 749px) {
-  .background-none .slider .multicolumn-card__info {
-    padding-bottom: 1rem;
-  }
-
   .multicolumn.background-none .slider.slider--mobile {
     margin-bottom: 0rem;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .background-none .multicolumn-card__image-wrapper {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-  }
-
-  .background-none .multicolumn-list .multicolumn-card__info,
-  .background-none
-    .multicolumn-list:not(.slider)
-    .center
-    .multicolumn-card__info {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
   }
 }
 
 .multicolumn-card {
   position: relative;
   box-sizing: border-box;
+  display: flex; 
+  flex-wrap: wrap; 
 }
 
 .multicolumn-card > .multicolumn-card__image-wrapper--full-width:not(.multicolumn-card-spacing) {
