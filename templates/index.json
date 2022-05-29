@@ -1,149 +1,126 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "16523916640af3abb9": {
+      "type": "slideshow",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "16523916648d7e72e9-0": {
+          "type": "slide",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
+            "image": "shopify:\/\/shop_images\/NF-Pitusa-Homepage.jpg",
+            "show_content_box": false,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "banner1_tooltip_show": true,
+            "banner1_tooltip_position": "hshp_bottomright",
+            "banner1_tooltip_is_product": true,
+            "banner1_tooltip_product": "pitusa-bandeau-swimsuit-navy-and-white",
+            "banner1_tooltip_link": "",
+            "banner1_tooltip_title": "",
+            "banner1_tooltip_subtitle": ""
           }
         },
-        "text": {
-          "type": "text",
+        "16523916648d7e72e9-1": {
+          "type": "slide",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
+            "image": "shopify:\/\/shop_images\/MM-SailorLuxe-Comp.jpg",
+            "show_content_box": false,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "banner1_tooltip_show": true,
+            "banner1_tooltip_position": "hshp_bottomleft",
+            "banner1_tooltip_is_product": true,
+            "banner1_tooltip_product": "sailor-luxe-plunge-swimsuit",
+            "banner1_tooltip_link": "",
+            "banner1_tooltip_title": "",
+            "banner1_tooltip_subtitle": ""
           }
         },
-        "button": {
-          "type": "buttons",
+        "d7abdf4e-b529-488e-addb-4a106a317949": {
+          "type": "slide",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify:\/\/collections\/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "image": "shopify:\/\/shop_images\/Seafolly-AMALFI-Homepage.jpg",
+            "show_content_box": false,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "banner1_tooltip_show": true,
+            "banner1_tooltip_position": "hshp_bottomleft",
+            "banner1_tooltip_is_product": true,
+            "banner1_tooltip_product": "amalfi-check-shirred-longline-bandeau-bikini-top-lime-light",
+            "banner1_tooltip_link": "",
+            "banner1_tooltip_title": "",
+            "banner1_tooltip_subtitle": ""
+          }
+        },
+        "692e3637-900a-49bb-81b1-676c59392973": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Heaven-Bliss-Homepage.jpg",
+            "show_content_box": false,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "banner1_tooltip_show": true,
+            "banner1_tooltip_position": "hshp_bottomleft",
+            "banner1_tooltip_is_product": true,
+            "banner1_tooltip_product": "bliss-bella-triangle-bikini-top-mutli",
+            "banner1_tooltip_link": "",
+            "banner1_tooltip_title": "",
+            "banner1_tooltip_subtitle": ""
           }
         }
       },
       "block_order": [
-        "heading",
-        "text",
-        "button"
+        "16523916648d7e72e9-0",
+        "16523916648d7e72e9-1",
+        "d7abdf4e-b529-488e-addb-4a106a317949",
+        "692e3637-900a-49bb-81b1-676c59392973"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "adapt_height_first_image": false,
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "background-1",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
-    "rich_text": {
-      "type": "rich-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "background-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "show_view_all": false,
-        "color_scheme": "background-1",
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
-      "blocks": {
-        "collection-0": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "product": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "second_image": false
-          }
-        },
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
-      ],
-      "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "background-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "heading_size": "h1",
-        "video_url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "background-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "layout": "grid",
+        "slide_height": "medium",
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
       }
     },
     "multicolumn": {
@@ -152,8 +129,9 @@
         "column1": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "image": "shopify:\/\/shop_images\/FREE_POST_150x_21651cbd-e7da-44be-b724-7dce744fce99.png",
+            "title": "Free Tracked UK Delivery",
+            "text": "<p>On orders over £100<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -161,8 +139,9 @@
         "column2": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "image": "shopify:\/\/shop_images\/Returns_11862653-573f-4024-bf10-37843c22612f.png",
+            "title": "Free UK Returns",
+            "text": "<p>Within 28 days<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -170,8 +149,19 @@
         "column3": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "image": "shopify:\/\/shop_images\/InternationalShipping.png",
+            "title": "Free International Delivery",
+            "text": "<p>On orders over £250<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "d559fd41-e07a-4204-bd68-e3ade7905875": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/NEXT_WORKING.png",
+            "title": "Next Working Day",
+            "text": "<p>Order by 3pm Monday - Friday<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -180,15 +170,15 @@
       "block_order": [
         "column1",
         "column2",
-        "column3"
+        "column3",
+        "d559fd41-e07a-4204-bd68-e3ade7905875"
       ],
       "settings": {
         "title": "",
         "heading_size": "h1",
-        "image_width": "third",
         "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
+        "columns_desktop": 4,
+        "column_alignment": "left",
         "background_style": "none",
         "button_label": "",
         "button_link": "",
@@ -198,14 +188,181 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "165239307826ec37da": {
+      "type": "collection-list",
+      "blocks": {
+        "165239307803253be5-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bikinis",
+            "image": "shopify:\/\/shop_images\/Bikini-NF-Comp.jpg",
+            "show_content": true,
+            "meganav_tooltip_show": false,
+            "meganav_tooltip_position": "hs_bottomleft",
+            "meganav_tooltip_is_product": false,
+            "meganav_tooltip_product": "",
+            "meganav_tooltip_link": ""
+          }
+        },
+        "165239307803253be5-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "swimsuits",
+            "image": "shopify:\/\/shop_images\/Swimsuit-SF-Comp.jpg",
+            "show_content": true,
+            "meganav_tooltip_show": true,
+            "meganav_tooltip_position": "hs_bottomleft",
+            "meganav_tooltip_is_product": true,
+            "meganav_tooltip_product": "seadive-scoop-neck-swimsuit-lime-light",
+            "meganav_tooltip_link": ""
+          }
+        },
+        "165239307803253be5-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "beach-dresses",
+            "image": "shopify:\/\/shop_images\/Beachwear-ROIDAL-2-Comp.jpg",
+            "show_content": true,
+            "meganav_tooltip_show": true,
+            "meganav_tooltip_position": "hs_bottomright",
+            "meganav_tooltip_is_product": true,
+            "meganav_tooltip_product": "melania-estefani-beach-shirt-floral-multi",
+            "meganav_tooltip_link": ""
+          }
+        },
+        "e777f103-5187-4aeb-a473-6dfd50f12f9b": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "kaftans",
+            "image": "shopify:\/\/shop_images\/Kaftans-MM-Comp.jpg",
+            "show_content": true,
+            "meganav_tooltip_show": true,
+            "meganav_tooltip_position": "hs_bottomright",
+            "meganav_tooltip_is_product": true,
+            "meganav_tooltip_product": "belted-long-dress-sand-ivory",
+            "meganav_tooltip_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "165239307803253be5-0",
+        "165239307803253be5-1",
+        "165239307803253be5-2",
+        "e777f103-5187-4aeb-a473-6dfd50f12f9b"
+      ],
+      "settings": {
+        "title": "Shop by category",
+        "heading_size": "h2",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "color_scheme": "background-2",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "1652393698e95616f5": {
+      "type": "collection-list",
+      "blocks": {
+        "1652393698d7263954-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "nuria-ferrer",
+            "image": "shopify:\/\/shop_images\/NF-Image-Box-Comp.jpg",
+            "show_content": false,
+            "meganav_tooltip_show": false,
+            "meganav_tooltip_position": "hs_bottomleft",
+            "meganav_tooltip_is_product": false,
+            "meganav_tooltip_product": "",
+            "meganav_tooltip_link": ""
+          }
+        },
+        "1652393698d7263954-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "miraclesuit",
+            "image": "shopify:\/\/shop_images\/MIRACLE-Image-Box-Comp.jpg",
+            "show_content": false,
+            "meganav_tooltip_show": false,
+            "meganav_tooltip_position": "hs_bottomleft",
+            "meganav_tooltip_is_product": false,
+            "meganav_tooltip_product": "",
+            "meganav_tooltip_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "1652393698d7263954-0",
+        "1652393698d7263954-1"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 2,
+        "color_scheme": "background-1",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "165386558246591fe3": {
+      "type": "rich-text",
+      "blocks": {
+        "165386558217eb0546-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "WOMENS DESIGNER SWIMWEAR AND BEACHWEAR",
+            "heading_size": "h2"
+          }
+        },
+        "165386558217eb0546-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Since 2002, here at Simply Beach we've been dedicated to finding the best and most flattering swim and beachwear to offer our customers. We know how important it is to look and feel great on holiday and we try to ensure we have the best collection of swimwearonline. Whether you’re the woman who likes the simple tri and side bikini to the one who need a little more support, we’ve got swimwear to get you feeling confident and beautiful on the beach. If you want something classic and understated or something with a hint of luxury about it, we strive to offer bikinis and swimsuits for a wide range of taste and budgets. From Banana Moon and Ted Baker to Heidi Klein and Jets, Seafolly and Miraclesuit to Gottex and ViX, the choice is huge. We are also the UK’s only stockist of the beautiful Jo Severin brand, launched in 2018, which has proven very popular with our customers.<\/p><p><\/p><p>Most of our bikinis are sold as separates meaning you can choose the perfect size in tops and bottoms and we try to help by offering the most suitable matching item for each style. Alternatively you can mix and match within the same range, or from a different range, colour or even a different brand. If you prefer to cover a little more body, the one-piece swimsuit has increased massively in popularity recently and our selection ranges from the hottest on-trend styles to the most classic and elegant of silhouettes. We also cater for the woman who wants shaping technology in the swimwear fabric, with tummy control to smooth the silhouette, women who need longer length suits for a more comfortable fit and also D cup and higher for better support for bigger busts.<\/p><p>To complete the holiday wardrobe, many of our brands include kaftans, cover-ups and beach dresses, bags and towels. We also stock beachwear only brands like Iconique from Italy, with a fantastic choice of beach dresses, kaftans, beach shirts and tops to Pitusa from Columbia with their lightweight beach dresses and cover ups in beautiful bright colours.<\/p><p>At Simply Beach we know that wearing beautiful, well-cut, figure flattering swimwear on holiday or at the spa will help you feel at your most confident and we want to make sure you find the right style. Our collections have been carefully selected by our expert buyers who are on hand to help you make the right choice for the piece pf swimwear to make you feel amazing. We know that buying the right <\/p><p>swimming costumeor beachwear can be tricky so we’ve made it as simple as possible to do at Simply Beach, with filters to narrow down your search and multiple images and a video to help you choose. For that little extra assistance, our customer services team are available Monday to Friday to give you fit and style advice if you need it to ensure you’re not disappointed with your purchase. And because we know that returning things is a pain, we offer FREE returns with a simple returns label meaning you won’t have to queue at the post office to return your purchase to us if it's not perfect.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "165386558217eb0546-0",
+        "165386558217eb0546-1"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": false,
+        "padding_top": 8,
+        "padding_bottom": 32
+      }
+    },
+    "16538663589bb9e9a4": {
+      "type": "apps",
+      "blocks": {
+        "447f65b1-0425-4f73-9de7-62d01efb822e": {
+          "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/form-embed-block\/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": "VSBhZM"
+          }
+        }
+      },
+      "block_order": [
+        "447f65b1-0425-4f73-9de7-62d01efb822e"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "16523916640af3abb9",
+    "multicolumn",
+    "165239307826ec37da",
+    "1652393698e95616f5",
+    "165386558246591fe3",
+    "16538663589bb9e9a4"
   ]
 }
