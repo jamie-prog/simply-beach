@@ -14,6 +14,7 @@
   margin: auto;
   /* 2.5rem margin on left & right */
   width: calc(100% - 5rem / var(--font-body-scale));
+  max-width: 85%;
 }
 
 .rich-text__blocks * {
@@ -23,23 +24,6 @@
 .rich-text--full-width .rich-text__blocks {
   /* 4rem (1.5rem + 2.5rem) margin on left & right */
   width: calc(100% - 8rem / var(--font-body-scale));
-}
-
-@media screen and (min-width: 750px) {
-  .rich-text__blocks {
-    max-width: 50rem;
-  }
-
-  .rich-text--full-width .rich-text__blocks {
-    /* 7.5rem (5rem + 2.5rem) margin on left & right */
-    width: calc(100% - 15rem);
-  }
-}
-
-@media screen and (min-width: 990px) {
-  .rich-text__blocks {
-    max-width: 78rem;
-  }
 }
 
 /* Blocks */
@@ -55,4 +39,13 @@
 
 .rich-text__blocks > * + a {
   margin-top: 3rem;
+}
+
+.rich-text__blocks h2{
+  font-weight: 600;
+}
+
+.rich-text__blocks .rich-text__text{
+  font-size: 1.5rem; 
+  line-height: 1.2; 
 }

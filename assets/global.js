@@ -624,10 +624,10 @@ class SlideshowComponent extends SliderComponent {
 
   setAutoPlay() {
     this.autoplaySpeed = this.slider.dataset.speed * 1000;
-    this.addEventListener('mouseover', this.focusInHandling.bind(this));
-    this.addEventListener('mouseleave', this.focusOutHandling.bind(this));
-    this.addEventListener('focusin', this.focusInHandling.bind(this));
-    this.addEventListener('focusout', this.focusOutHandling.bind(this));
+    // this.addEventListener('mouseover', this.focusInHandling.bind(this));
+    // this.addEventListener('mouseleave', this.focusOutHandling.bind(this));
+    // this.addEventListener('focusin', this.focusInHandling.bind(this));
+    // this.addEventListener('focusout', this.focusOutHandling.bind(this));
 
     this.play();
     this.autoplayButtonIsSetToPlay = true;
