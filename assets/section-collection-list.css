@@ -5,6 +5,8 @@
 
 .collection-list-title {
   margin: 0;
+  font-weight: 600; 
+  letter-spacing: 2px; 
 }
 
 @media screen and (max-width: 749px) {
