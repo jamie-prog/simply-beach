@@ -985,3 +985,45 @@ class LocalizationForm extends HTMLElement {
 }
 
 customElements.define('localization-form', LocalizationForm);
+
+class ProgressBar extends HTMLElement{
+  constructor(){
+    super();
+    this.progressBar = this.querySelector(".progress-bar");
+    document.addEventListener('scroll', ()=>{
+      let cstp = Math.abs(document.body.getBoundingClientRect().top);
+      this.setWidth(cstp);
+    });
+
+    document.addEventListener('resize', () => {
+      let cstp = Math.abs(document.body.getBoundingClientRect().top);
+      this.setWidth(cstp);
+    })
+  }
+
+  connectedCallback(){
+    setTimeout(() => {
+      let curScrollTopPos = Math.abs(document.body.getBoundingClientRect().top);
+      this.setWidth(curScrollTopPos);
+    }, 1000);
+  }
+
+  setWidth(curScrollTopPos){
+      let initialParams = this.getInitialValues();
+      let curScrollBottom = curScrollTopPos + initialParams.windowHeight;
+      let progressWidth = (curScrollTopPos / initialParams.fullScrollAmount) * 100;
+      this.progressBar.style.width = progressWidth + '%';
+  }
+
+  getInitialValues(){
+    let initialParams = {
+      windowHeight : window.innerHeight, 
+      documentHeight: document.body.clientHeight
+    }
+    initialParams.fullScrollAmount = initialParams.documentHeight - initialParams.windowHeight;
+
+    return initialParams;
+  }
+}
+
+customElements.define('progress-bar', ProgressBar);

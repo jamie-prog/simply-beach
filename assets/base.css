@@ -2971,3 +2971,26 @@ announcement-bar{
   text-decoration: none; 
 }
 
+/*================ Progress Bar ================*/
+
+progress-bar{
+  display: block; 
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  z-index: 999;
+}
+
+progress-bar .progress-bar-container{
+  position: relative; 
+}
+
+.progress-bar-container .progress-bar{
+  background-color: #aea37f;
+  display: inline-block; 
+  height: 3px; 
+  left: 0; 
+  position: absolute;
+  z-index: 1000;
+}
