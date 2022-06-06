@@ -1,0 +1,48 @@
+<upsell-product data-upsell-sku="{{upsell_sku}}"></upsell-product>
+<script>
+  class UpsellSku extends HTMLElement{
+    constructor(){
+      super();
+      this.upsellSku = this.getAttribute("data-upsell-sku");
+      this.upsellSearchURL = `/search?type=product&q=variants.sku:${this.upsellSku}*&view=sku`;
+    }
+
+    connectedCallback(){
+      this.getUpsellItem(this.upsellSearchURL);
+    }
+
+    getUpsellItem(upsellSearchURL){
+      fetch(this.upsellSearchURL)
+        .then((response)=>{
+          return response.text();
+        })
+        .then((html)=>{
+          let parser = new DOMParser();
+          let upsellContent = parser.parseFromString(html, 'text/html');
+          this.appendChild(upsellContent.querySelector('.upsell--items__wrapper'));
+        })
+    }
+  }
+
+  customElements.define('upsell-product', UpsellSku);
+</script>
+<style>
+  upsell-product{
+    display: block;
+  }
+  upsell-product button[type="submit"]{
+    margin-top: 10px;
+  }
+  .product-upsell-item{
+    margin-bottom: 10px;
+  }
+
+  .product-upsell-item .product__title{
+    margin-bottom: 5px;
+  }
+
+  .product-upsell-item .price-item{
+    display: block; 
+    margin-bottom: 10px;
+  }
+</style>

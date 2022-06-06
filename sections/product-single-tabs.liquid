@@ -1,0 +1,125 @@
+{{'component-product-tabs.css' | asset_url | stylesheet_tag }}
+{% assign producttags = product.tags | downcase %}
+<div class="page-width">
+  <product-single-tabs class="product-single__tabs" id="product-tabs">
+    <div class="product-single__tabs-header">
+      {%- if section.settings.show_description_tab -%}
+      <div class="product-single__tabs-button product-single__tabs-button--active" data-tab-header="details">
+        Details
+      </div>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        <div class="product-single__tabs-button {% if section.settings.show_description_tab == false and forloop.first %}product-single__tabs-button--active{% endif %}" data-tab-header="{{block.settings.title | handle}}">
+          {{block.settings.title}}
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="product-single__tabs-content">
+      {%- if section.settings.show_description_tab -%}
+        {% assign current_variant = product.selected_or_first_available_variant %}
+        <div class="product-single__tabs-text product-single__tabs-text--active" data-tab-content="details">
+          <div class="rte">
+            <div class="product-single__tabs-details">
+              <div class="product-single__tabs-details-left" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                <meta itemprop="price" content="{{ current_variant.price | money_without_currency | remove: "," }}">
+                {%- assign vendor_handle = product.vendor | handle -%}
+                <p class="product-single__vendor"><a href="{% if product.vendor %}{{ collections[vendor_handle].url }}{% else %}#{% endif %}">{{product.vendor}}</a></p>
+                <p class="product-single__title">{{ product.title | upcase}}</p>
+                <p class="product-single__price-{{ product.id }}{% unless current_variant.available %} product-price--sold-out{% endunless %}">
+                  {% if current_variant.compare_at_price > current_variant.price %}
+                      <span class="price-item product-price__price-{{ product.id }} price-item--sale">{{current_variant.price | money}}</span>
+                      <span id="ComparePrice-{{ product.id }}" class="price-item price-item--compare">RRP {{ current_variant.compare_at_price | money }}</span>
+                  {% else %}
+                    <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+                    <span class="price-item price-item--regular">{{current_variant.price | money}}</span>
+                  {% endif %}
+                  <link itemprop="availability" href="https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"/>
+                  <link itemprop="url" content="{{ shop.url }}{{ product.url }}"/>
+                  <link itemprop="priceValidUntil" content="{{ "now" | date: "%s" | plus: 864000 | date: "%b %d, %Y" }}"/>
+                  <span class="product-tabs-availability">{% if product.available %}In Stock{% else %}Out Of Stock{% endif %}</span>
+                </p>
+                <div class="product-single__details-meta">
+                  <p>Brand: {{ product.vendor }}</p>
+                  <p>Model: {{ product.title }}</p>
+                  <p>SKU: <span class="current-sku-{{ product.id }}">{{ current_variant.sku }}</span></p>
+                </div>
+                
+                {% unless producttags contains "donotshipoutsideuk" %}{% if producttags contains "donotshipoutsideeu" %}<span class="product_tabs_shipping_restriction"><strong>Please note:</strong> This item cannot be shipped outside the European Union{% if multistore contains 'scuba' %} - <a href="/pages/shipping-outside-of-european-union">learn more</a>{% endif %}</span>{% endif %}{% endunless %}
+                {% if producttags contains "donotshipoutsideuk" %}<span class="product_tabs_shipping_restriction"><strong>Please note:</strong> This item cannot be shipped outside the United Kingdom</span>{% endif %}
+              </div>
+              <div class="product-single__details-desc rte" itemprop="description">
+                {{ product.description }}
+                {% if multistore contains 'swim' or multistore contains 'halocline' %}{% include 'product-swim-features' %}{% endif %}
+                {% if multistore contains 'scuba' and product.type contains 'Masks' %}<br /><p>If you have longer hair and want to avoid  it becoming tangled in the mask strap or just want the strap to be more  comfortable remember to purchase a <a href="/products/simply-scuba-mask-strap-wrap">Strap  Wrapper</a>.</p>{% endif %}
+                {% if product.metafields.bfs_compare != blank %}<div class="abtest-b">{% include 'compare-data' with 'productPage' %}</div>{% endif %}
+                {% if product.tags contains 'over18' %}<a href="/pages/age-restricted-items"><img src="https://cdn.shopify.com/s/files/1/1767/1829/files/over18descriptionBanner.jpg" alt="You must be over 18 to purchase this product"></a>{% endif %}       
+                {% if multistore contains 'swim' and product.type contains 'Swimwear' %}<strong>Want to learn more about caring for swimwear and washing instructions - <a href="/pages/swimwear-care" title="Swimwear Care">click here</a></strong>{% endif %}       
+                <div class="large-up-hide">
+                {% unless producttags contains "donotshipoutsideuk" %}{% if producttags contains "donotshipoutsideeu" %}<span class="product_tabs_shipping_restriction"><strong>Please note:</strong> This item cannot be shipped outside the European Union{% if multistore contains 'scuba' %} - <a href="/pages/shipping-outside-of-european-union">learn more</a>{% endif %}</span>{% endif %}{% endunless %}
+                {% if producttags contains "donotshipoutsideuk" %}<span class="product_tabs_shipping_restriction"><strong>Please note:</strong> This item cannot be shipped outside the United Kingdom</span>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+      {% for block in section.blocks %}
+        <div class="product-single__tabs-text {% if section.settings.show_description_tab == false and forloop.first %}product-single__tabs-text--active{% endif %}" data-tab-content="{{block.settings.title | handle}}">
+          <div class="rte">
+            {% if block.settings.content_page %}
+              {{block.settings.content_page.content}}
+            {% else %}
+              {{block.settings.content}}         
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </product-single-tabs>
+</div>
+{% schema %}
+{
+  "name":"Product Single Tabs",
+  "settings":[
+    {
+      "type": "checkbox",
+      "id": "show_description_tab",
+      "label": "Show Description Tab",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type":"product_tab",
+      "name":"Product Tab",
+      "settings":[
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type":"page",
+          "id":"content_page",
+          "label":"Content Page"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "category":"Product",
+      "name":"Product Tabs"
+    }
+  ]
+}
+{% endschema %}

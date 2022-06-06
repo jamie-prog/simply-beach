@@ -389,8 +389,9 @@
   <{% if section.settings.enable_sticky_header %}/sticky-header{% else %}/div{% endif %}>
 </div>
 
+{%- comment -%}
 {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
-
+{%- endcomment -%}
 <script>
   class StickyHeader extends HTMLElement {
     constructor() {

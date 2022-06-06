@@ -1024,3 +1024,149 @@ class ProgressBar extends HTMLElement{
 }
 
 customElements.define('progress-bar', ProgressBar);
+
+class ProductSingleTabs extends HTMLElement{
+  constructor(){
+    super();
+    this.readMoreTrigger = document.getElementById("readmore");
+    if(this.readMoreTrigger){
+      this.readMoreTrigger.addEventListener('click', (e) =>{
+        e.preventDefault();
+        let detailTabHeader = document.querySelector("[data-tab-header='details']");
+        let tabClientRectY = this.getBoundingClientRect().top;
+        let scrollAmount = tabClientRectY + 100;
+        this.showTabs(detailTabHeader);
+        window.scrollTo({top: scrollAmount, behavior: 'smooth'});
+      })
+    }
+    this.querySelectorAll("[data-tab-header]").forEach((tabHeader)=>{
+      tabHeader.addEventListener('click', ()=>{
+        this.showTabs(tabHeader);
+      })
+    }) 
+  }
+
+  showTabs(tabHeader){
+    let oldOpenTabContent = this.querySelector("[data-tab-content].product-single__tabs-text--active");
+    let oldOpenTabHeader = this.querySelector("[data-tab-header].product-single__tabs-button--active");
+    let targetTabContent = this.querySelector(`[data-tab-content="${tabHeader.getAttribute('data-tab-header')}"]`);
+    if(targetTabContent && oldOpenTabContent != targetTabContent){
+      // Close old opened tab header and content
+      oldOpenTabHeader.classList.remove("product-single__tabs-button--active");
+      oldOpenTabContent.classList.remove("product-single__tabs-text--active");
+
+      //Open new target Tab header and content
+      tabHeader.classList.add("product-single__tabs-button--active");
+      targetTabContent.classList.add("product-single__tabs-text--active");
+    }
+  }
+}
+
+customElements.define('product-single-tabs', ProductSingleTabs);
+
+class RecentlyViewedProducts extends HTMLElement{
+  constructor(){
+    super();
+    this.count_recently_item = parseInt(this.getAttribute("data-item-count"));
+    this.parser = new DOMParser();
+    this.recentlyItemsWrapper = this.querySelector("[data-recently-item-wrapper]");
+  }
+
+  connectedCallback(){
+    this.showRecentlyViewed();
+  }
+
+  static cookie(b, j, m){
+    if (typeof j != "undefined") {
+      m = m || {};
+      if (j === null) {
+        j = "";
+        m.expires = -1
+      }
+      var e = "";
+      if (m.expires && (typeof m.expires == "number" || m.expires.toUTCString)) {
+        var f;
+        if (typeof m.expires == "number") {
+          f = new Date();
+          f.setTime(f.getTime() + (m.expires * 24 * 60 * 60 * 1000))
+        } else {
+          f = m.expires
+        }
+        e = "; expires=" + f.toUTCString()
+      }
+      var l = m.path ? "; path=" + (m.path) : "";
+      var g = m.domain ? "; domain=" + (m.domain) : "";
+      var a = m.secure ? "; secure" : "";
+      document.cookie = [b, "=", encodeURIComponent(j), e, l, g, a].join("")
+    } else {
+      var d = null;
+      if (document.cookie && document.cookie != "") {
+        var k = document.cookie.split(";");
+        for (var h = 0; h < k.length; h++) {
+          var c = k[h].trim();
+          if (c.substring(0, b.length + 1) == (b + "=")) {
+            d = decodeURIComponent(c.substring(b.length + 1));
+            break
+          }
+        }
+      }
+      return d
+    }
+  }
+
+  showRecentlyViewed(){
+    let handleArray = RecentlyViewedProducts.cookie(RecentlyViewedProducts.config.name).split(" ");
+    let requestParams = [];
+    handleArray.forEach((handle, index) => {
+      if(index < this.count_recently_item){
+        let handleURL = `https://${window.location.hostname}/products/${handle}?view=recently_viewed`;
+        let requestParam = fetch(handleURL, {cache: 'no-cache'});
+        requestParams.push(requestParam);
+      }
+    });
+    Promise.all(requestParams)
+      .then((responses) => {
+        return Promise.all(responses.map((response)=>{
+          return response.text();
+        }))
+      }).then((data)=>{
+        data.forEach((itemHTMLText) => {
+          let itemHTML = this.parser.parseFromString(itemHTMLText, 'text/html').querySelector(".recently-viewed--item");
+          if(itemHTML){
+            this.recentlyItemsWrapper.appendChild(itemHTML);
+          }
+        })
+      })
+  }
+
+  static setRecentItem(){
+    if(window.location.pathname.indexOf("/products/") !== -1){
+      let newItemHandle = window.location.pathname.match(/\/products\/([a-z0-9\-]+)/)[1];
+      let itemHandles = RecentlyViewedProducts.cookie(RecentlyViewedProducts.config.name).split(" ");
+      let newItemHandleIndex = itemHandles.indexOf(newItemHandle);
+      let storeLimit = RecentlyViewedProducts.config.store_item_limit
+      if(newItemHandleIndex === -1){
+        itemHandles.unshift(newItemHandle);
+        itemHandles.splice( storeLimit - 1);
+      }else{
+        itemHandles.splice(newItemHandleIndex, 1);
+        itemHandles.unshift(newItemHandle);
+      }
+      let newItems = itemHandles.join(" ");
+      RecentlyViewedProducts.cookie(RecentlyViewedProducts.config.name, newItems, RecentlyViewedProducts.config.cookieConfiguration);
+    }
+  }
+
+  static config =  {
+    name : "shopify_recently_viewed", 
+    store_item_limit: 10,
+    cookieConfiguration: {
+      domain: window.location.hostname,
+      expires: 90, 
+      path: "/"
+    }
+  }
+}
+
+RecentlyViewedProducts.setRecentItem();
+customElements.define("recently-viewed", RecentlyViewedProducts);

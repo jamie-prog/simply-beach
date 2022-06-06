@@ -1,0 +1,16 @@
+<div id="robots">
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW, NOARCHIVE">
+</div>
+    
+{%- layout none -%}
+{%- paginate search.results by 250 -%}
+{%- if search.performed -%}
+<div class="upsell--items__wrapper">
+	{%- for product in search.results -%}
+	{%- unless product.object_type == 'product' -%}{%- continue -%}{%- endunless -%}
+	{% include 'variant-upsell-form', product: product %}
+	{%- unless forloop.last %},{% endunless -%}
+	{%- endfor -%}
+</div>
+{%- endif -%}
+{%- endpaginate -%}

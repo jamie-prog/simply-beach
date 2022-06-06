@@ -2,6 +2,11 @@ if (!customElements.get('media-gallery')) {
   customElements.define('media-gallery', class MediaGallery extends HTMLElement {
     constructor() {
       super();
+      this.skuVideos = [
+        this.getAttribute("data-sku-video-mp4"), 
+        this.getAttribute("data-sku-video-webm")
+      ];
+      this.skuVideoEls = this.querySelectorAll("[data-sku-video]");
       this.elements = {
         liveRegion: this.querySelector('[id^="GalleryStatus"]'),
         viewer: this.querySelector('[id^="GalleryViewer"]'),
@@ -15,6 +20,49 @@ if (!customElements.get('media-gallery')) {
         mediaToSwitch.querySelector('button').addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
       });
       if (this.dataset.desktopLayout !== 'stacked' && this.mql.matches) this.removeListSemantic();
+    }
+
+    connectedCallback(){
+      this.checkExistSkuVideos(this.skuVideos);
+    }
+
+    request(url){
+      return new Promise((resolve, reject) =>{
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url); 
+        xhr.onload = () =>  resolve(xhr.status);
+        xhr.onerror = () => reject(xhr.statusText);
+        xhr.send();
+      })
+    }
+    checkExistSkuVideos(skuVideos){
+      let requests = [];
+      skuVideos.forEach((skuVideo) => {
+        requests.push(this.request(skuVideo));
+      });
+
+      if(requests.length > 0){
+        Promise.all(requests).then((responses) => {
+          console.log(responses);
+          let existSkuVideo = false;
+          for(let i = 0; i < responses.length; i++){
+            if(responses[i] == '200'){
+              console.log('exist SkuVideo'); 
+              existSkuVideo = true;
+              break;
+            }
+          }
+
+          if(!existSkuVideo){
+            console.log('no exist sku video');
+            this.skuVideoEls.forEach((skuVideoEl)=>{
+              skuVideoEl.remove();
+            })
+          }
+        }).catch((errors) => {
+          console.log(errors);
+        })
+      }
     }
 
     onSlideChanged(event) {

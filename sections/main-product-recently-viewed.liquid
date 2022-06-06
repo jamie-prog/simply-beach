@@ -1,0 +1,35 @@
+<recently-viewed data-item-count="{{section.settings.count_recent_viewed_products}}">
+    <div class="page-width">
+        <h2 class="recently-viewed-products--title">{{section.settings.title}}</h2>
+        <div class="grid grid--4-col-tablet grid--2-col recently-viewed__products--wrapper" data-recently-item-wrapper></div>
+    </div>
+</recently-viewed>
+
+{% schema %}
+{
+    "name":"Recently Viewed Products", 
+    "settings":[
+        {
+            "type":"text",
+            "id":"title",
+            "label":"Recently Viewed Products",
+            "default":"Recently Viewed Products"
+        },
+        {
+            "type":"range", 
+            "id":"count_recent_viewed_products", 
+            "label":"Recently Viewed Products count",
+            "min": 4, 
+            "max": 8, 
+            "step": 1,
+            "default": 4
+        }
+    ],
+    "presets":[
+        {
+            "name":"Recently Viewed Products", 
+            "category":"product"
+        }
+    ]
+}
+{% endschema %}
