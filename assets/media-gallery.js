@@ -23,7 +23,9 @@ if (!customElements.get('media-gallery')) {
     }
 
     connectedCallback(){
-      this.checkExistSkuVideos(this.skuVideos);
+      if(this.skuVideoEls){
+        this.checkExistSkuVideos(this.skuVideos);
+      }
     }
 
     request(url){

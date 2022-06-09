@@ -34,8 +34,8 @@ if (!customElements.get('quick-add-modal')) {
 
           if (window.ProductModel) window.ProductModel.loadShopifyXR();
 
-          this.removeGalleryListSemantic();
-          this.preventVariantURLSwitching();
+          //this.removeGalleryListSemantic();
+          //this.preventVariantURLSwitching();
           super.show(opener);
         })
         .finally(() => {

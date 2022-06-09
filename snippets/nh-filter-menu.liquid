@@ -1,0 +1,214 @@
+<div class="filter-menu filter-selected-{{ collection.handle }}" data-total-tag-count="{{ collection.tags | size }}">
+  {% comment %}Section that adds the department dropdown on collections where metafield collection.parent is present{% endcomment %}
+  {% assign has_parents = false %}
+  {% assign has_children = false %}
+  {% assign this_collection_handle = collection.handle %}
+  {% assign collection_parent = collection.metafields.collection.parent %}
+  
+  {% if collection_parent %}
+    {% assign has_parents = true %}
+  {% endif %}
+   
+  {% for collection in collections %}
+    {% assign collections_parent = collection.metafields.collection.parent %}
+    {% if this_collection_handle == collection.metafields.collection.parent %}
+        {% assign has_children = true %}
+    {% endif %}
+  {% endfor %}
+  
+  {% if has_parents == false and has_children == true %}
+  <!--I'm a top level department like bikinis -->  
+    <div class="filter-group filter-group-department-auto has_multiple_items">
+      <div class="scroll-content">
+        <div class="menu-trigger"><span class="menu-trigger__count"></span><span class="menu-trigger__title">Department</span>{% render 'icon-chevron-down' %}</div>
+        <ul class="nav-department filter-dropdown--body">
+          <div>
+            <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+            {% for collection in collections %}
+            {% if collection.metafields.collection.parent == this_collection_handle %}
+            <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </ul>
+      </div>
+    </div>
+  {% assign blockautomateddepartmentmenu = true %}
+  {% elsif has_parents == true and has_children == true %}
+  <!--I'm a mid level department like bikini tops -->  
+    <div class="filter-group filter-group-department-auto has_multiple_items">
+      <div class="scroll-content">
+        <div class="menu-trigger"><span class="menu-trigger__count"></span><span class="menu-trigger__title">Department</span>{% render 'icon-chevron-down' %}</div>
+        <ul class="nav-department filter-dropdown--body">
+          <div>
+            <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+            {% for collection in collections %}
+            {% if collection.metafields.collection.parent == this_collection_handle %}
+            <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </ul>
+      </div>
+    </div>
+  {% assign blockautomateddepartmentmenu = true %}
+  {% elsif has_parents == true and has_children == false %}
+  <!--I'm a low level department like bandeau bikinis -->  
+    <div class="filter-group filter-group-department-auto has_multiple_items">
+      <div class="scroll-content">
+        <div class="menu-trigger"><span class="menu-trigger__count"></span><span class="menu-trigger__title">Department</span>{% render 'icon-chevron-down' %}</div>
+        <ul class="nav-department filter-dropdown--body">
+          <div>
+            <li><a href="{{ collections[collection_parent].url }}">{{ collections[collection_parent].title }}</a></li>
+            {% for collection in collections %}
+            {% if collection.metafields.collection.parent == collection_parent %}
+            <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </ul>
+      </div>
+    </div>
+ {% assign blockautomateddepartmentmenu = true %} 
+ {% endif %}
+ {% comment %}End of section that adds the department dropdown on collections where metafield collection.parent is present{% endcomment %}
+
+ {% comment %}Start of actual filters, the department filter is listed first and hides if any of the above are active on page{% endcomment %}
+  {% for block in section.blocks %}
+    {% if block.type == 'filter-menu' %}
+
+      {% assign menu_title = block.settings.filter-menu-title %}
+      {% assign menu_list_items = block.settings.filter-menu-list-items | split: "," %}
+      {% assign tag_list = collection.tags | downcase %}
+      {% assign showmenu = false %}
+      {% assign menuapplied = false %}
+      {% assign departmentCount = 0 %}
+
+      {% for menu_list_item in menu_list_items %}
+
+        {% if current_tags contains menu_list_item %}
+          {% assign menuapplied = true %}
+        {% endif %}
+
+        {% if tag_list contains menu_list_item %}
+          {% assign showmenu = true %}
+          {% assign departmentCount = departmentCount | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+
+      {% if departmentCount == 1 %}
+          {% assign showmenu = false %}
+      {% endif %}
+
+      {% if departmentCount >= 100 %}
+          {% assign col = 4 %}
+      {% elsif departmentCount >= 76 and departmentCount < 100 %}  
+          {% assign col = 4 %}
+      {% elsif departmentCount >= 51 and departmentCount < 75 %}
+          {% assign col = 3 %}
+      {% elsif departmentCount >= 26 and departmentCount < 50 %}
+          {% assign col = 2 %}
+      {% elsif departmentCount <= 25 %}
+          {% assign col = 1 %}                
+      {% endif %}
+
+      {% if showmenu %}
+        {% if menu_title == 'Department' %}
+        {% if blockautomateddepartmentmenu %}{% else %}
+
+            {% assign filtervendornames = collection.all_vendors | downcase | replace: ' ', '-' %}
+            {% if filtervendornames contains collection.handle %}
+
+              {% assign brandname = collection.handle | split: '-' %}
+              {% assign brand = '' %}
+              {%for part in brandname %}
+              {% assign capitalizedpart = part | capitalize %}
+              {% assign brand = brand | append: capitalizedpart | append: ' ' %}
+              {%endfor%}
+  
+              <div class="filter-group filter-group-{{menu_title}} has_multiple_items">
+                <div class="scroll-content">
+                  <div class="menu-trigger"><span class="menu-trigger__count"></span><span class="menu-trigger__title">{{menu_title}}</span>{% render 'icon-chevron-down' %}</div>
+                  <ul class="nav-department filter-dropdown--body">
+                    <div>
+                      {% for menu_list_item in menu_list_items %}
+                        {% if tag_list contains menu_list_item %}
+                        {% assign department = collections[menu_list_item].title  %}
+                        {% if collections[menu_list_item].metafields.filter.department %}
+                        {% assign department = collections[menu_list_item].metafields.filter.department %}  
+                        {% endif %}
+                          <li><a href="/collections/{{collection.handle}}/{% for tag in current_tags %}{{tag}}+{% endfor %}{{menu_list_item}}">{{brand}} {{ department }}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </ul>
+                </div>
+              </div>
+        {% else %}     
+              <div class="filter-group filter-group-{{menu_title}} has_multiple_items">
+                <div class="scroll-content">
+                  <div class="menu-trigger"><span class="menu-trigger__count"></span><span class="menu-trigger__title">{{menu_title}}</span>{% render 'icon-chevron-down' %}</div>
+                  <ul class="nav-department filter-dropdown--body">
+                    <div>
+                      {% for menu_list_item in menu_list_items %}   
+                        {% assign department = collections[menu_list_item].title  %}
+                        {% if collections[menu_list_item].metafields.filter.department %}
+                        {% assign department = collections[menu_list_item].metafields.filter.department %}  
+                        {% endif %}
+                        <li><a href="{{ collections[menu_list_item].url }}"> {{ department }}</a></li>
+                      {% endfor %}
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% else %}
+          {% if menuapplied %}
+            <div class="filter-group filter-group-{{menu_title}} has_multiple_items">
+              <div class="scroll-content">
+                <div class="menu-trigger"><span class="menu-trigger__count" style="display:inline">1</span><span class="menu-trigger__title">{{menu_title}}</span>{% render 'icon-chevron-down' %}</div>
+                <ul class="nav-department filter-dropdown--body">
+                  <div>
+                    {% for menu_list_item in menu_list_items %}   
+                      {% if current_tags contains menu_list_item %}
+                          <li class="collection-container selected"><i class="check-icon"></i>{{ collections[menu_list_item].title | link_to_remove_tag: menu_list_item}}</li> 
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </ul>
+              </div>
+            </div>  
+          {% else %}
+          <div class="filter-group filter-group-{{menu_title}} has_multiple_items">
+            <div class="scroll-content">
+              <div class="menu-trigger"><span class="menu-trigger__count"></span><span class="menu-trigger__title">{{menu_title}}</span>{% render 'icon-chevron-down' %}</div>
+              <ul class="filter-dropdown nav-size filter-dropdown--body" data-index="{{col}}">
+                {% assign i = 1 %}
+                {% for menu_list_item in menu_list_items %}
+                  {% if tag_list contains menu_list_item %}
+
+                    {% if i == 1 %}<li class="filter-column" data-index="1"><ul>{% endif %}
+                    {% if i == 26 %}<li class="filter-column" data-index="2"><ul>{% endif %}
+                    {% if i == 51 %}<li class="filter-column" data-index="3"><ul>{% endif %}
+                    {% if i == 76 %}<li class="filter-column" data-index="4"><ul>{% endif %}
+                        <li class="collection-container"><a href="/collections/{{collection.handle}}/{% for tag in current_tags %}{{tag}}+{% endfor %}{{menu_list_item}}"><i class="check-icon"></i> {{ collections[menu_list_item].title }}</a></li>
+                    {% if i == 25 %}</ul></li>{% endif %}
+                    {% if i == 50 %}</ul></li>{% endif %}
+                    {% if i == 75 %}</ul></li>{% endif %}
+                    {% if i >= 100 %}</ul></li>{% endif %}
+
+                    {% assign i = i | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+                {% unless i == 25 or i == 50 or i == 75 %}</ul></li>{% endunless %}
+              </ul>
+            </div>
+          </div>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  {% comment %}End of actual filters{% endcomment %}
+</div>

@@ -18,7 +18,22 @@
       </h1>
 
       {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
+        <div class="collection-hero__description rte center">
+          {%- if collection.description.size > 500 -%}
+            <div class="collection-description__short desktop">{{collection.description | truncate: 500 | strip_html}}</div>
+            <div class="collection-description__short mobile">{{collection.description | truncate: 210 | strip_html}}</div>
+          {%- elsif collection.description.size > 210 -%}
+            <div class="collection-description__short mobile">{{collection.description | truncate: 210 | strip_html}}</div>
+          {%- endif -%}
+          
+          {%- if collection.description.size > 500 -%}
+          <div class="collection-description--full">{{ collection.description }}</div>
+            <a href="javascript:void(0)" class="trigger-full--description"><span class="more">Read More</span><span class="close">Close</span></a>
+          {%- elsif collection.description.size > 210 -%}
+          <div class="collection-description--full mobile">{{ collection.description }}</div>
+          <a href="javascript:void(0)" class="trigger-full--description mobile"><span class="more">Read More</span><span class="close">Close</span></a>
+          {%- endif -%}
+        </div>
       {%- endif -%}
     </div>
 
@@ -42,7 +57,15 @@
     {%- endif -%}
   </div>
 </div>
-
+<script>
+  let collectionDescription = document.querySelector(".collection-hero__description");
+  let colDesFulTrigger = document.querySelector(".collection-hero__description .trigger-full--description"); 
+  if(collectionDescription && colDesFulTrigger){
+    colDesFulTrigger.addEventListener('click', ()=>{
+      collectionDescription.classList.toggle("show-full-description");
+    })
+  }
+</script>
 {% schema %}
 {
   "name": "t:sections.main-collection-banner.name",

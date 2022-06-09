@@ -49,7 +49,7 @@
   display: block;
   color: var(--color-foreground-85);
   font-size: 1.4rem;
-  margin: 0 2rem 0 0;
+  margin: 0 10px 0 0;
 }
 
 .facet-filters__summary {
@@ -141,13 +141,6 @@
   outline-offset: 0.3rem;
   box-shadow: 0 0 0 0.3rem rgb(var(--color-background)),
     0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
-}
-
-.facet-filters__sort:focus-visible {
-  outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
-  outline-offset: 1rem;
-  box-shadow: 0 0 0 1rem rgb(var(--color-background)),
-    0 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.3);
 }
 
 .facet-filters__sort.focused,

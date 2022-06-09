@@ -19,14 +19,14 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(var(--color-foreground), 0.2);
+  background: rgba(var(--color-foreground), 0.8);
   height: 100%;
 }
 
 .quick-add-modal[open] {
   opacity: 1;
   visibility: visible;
-  z-index: 101;
+  z-index: 1000;
 }
 
 .quick-add-modal__content {
@@ -34,31 +34,27 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  margin: 3.2rem auto 0;
+  margin: 20px auto 0;
   width: 100%;
   background-color: rgb(var(--color-background));
   overflow: hidden;
-  max-width: var(--page-width);
+  max-width: 900px;
   width: calc(100% - 3rem);
+  padding: 35px;
+  border: none;
 }
 
 @media screen and (min-width: 750px) {
   .quick-add-modal__content {
-    margin-top: 10rem;
     width: 80%;
     height: calc(100% - 20rem);
     overflow-y: auto;
-  }
-
-  quick-add-modal .quick-add-modal__toggle {
-    top: 2rem;
-    right: 2rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .quick-add-modal__content {
-    width: 70%;
+    width: 100%;
   }
 }
 
@@ -67,10 +63,7 @@
 }
 
 .quick-add-modal__content-info {
-  padding-right: 4.4rem;
   display: flex;
-  overflow-y: auto;
-  padding: 2.5rem;
   height: 100%;
 }
 
@@ -86,31 +79,19 @@
     margin-left: 1.5rem;
     margin-right: 1.5rem;
   }
-
-  .quick-add-modal__content {
-    bottom: 3.2rem;
-  }
-  
-  .quick-add-modal__content-info > * {
-    max-height: 100%;
-  }
 }
 
 .quick-add-modal__toggle {
-  background-color: rgb(var(--color-background));
-  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
-  border-radius: 50%;
-  color: rgba(var(--color-foreground), 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 1.2rem;
-  z-index: 5;
-  width: 4rem;
-  position: fixed;
-  top: 1.5rem;
-  right: 1.5rem;
+  cursor: pointer; 
+  position: fixed; 
+  top:0; 
+  right: 0; 
+  border: none; 
+  width: 40px; 
+  height: 40px; 
+  background: #aea37f;
+  padding: 0px; 
+
 }
 
 .quick-add-modal__toggle:hover {
@@ -118,24 +99,19 @@
 }
 
 .quick-add-modal__toggle .icon {
-  height: auto;
-  margin: 0;
-  width: 2.2rem;
+  width: 20px; 
+  height: 20px; 
+  stroke: #fff; 
 }
 
 quick-add-modal .product:not(.featured-product) .product__view-details {
   display: block;
 }
 
-quick-add-modal .quick-add-hidden,
-quick-add-modal .product__modal-opener:not(.product__modal-opener--image),
-quick-add-modal .product__media-item:not(:first-child) {
+quick-add-modal .quick-add-hidden{
   display: none !important;
 }
 
-quick-add-modal .slider.slider--mobile {
-  overflow: visible;
-}
 
 quick-add-modal .product__media-list .deferred-media {
   display: block;
@@ -161,17 +137,10 @@ quick-add-modal .product--stacked .product__info-container--sticky {
     width: calc(54% - var(--grid-desktop-horizontal-spacing) / 2)
   }
 
-  quick-add-modal .thumbnail-slider .thumbnail-list.slider--tablet-up {
-    display: none;
-  }
 }
 
 quick-add-modal .page-width {
   padding: 0;
-}
-
-quick-add-modal .product__title > h1 {
-  display: none;
 }
 
 quick-add-modal .product__title > a {
@@ -198,4 +167,72 @@ quick-add-modal .product-form__buttons {
   padding: 0.8rem;
   min-width: 100%;
   box-sizing: border-box;
+}
+
+
+@media screen and (min-width: 990px){
+  quick-add-modal .thumbnail-list.slider--tablet-up .thumbnail-list__item.slider__slide {
+    width: calc(100% / 3 - 0.8rem);
+  }
+}
+
+quick-add-modal .card--vendor{
+  font-size: 22px;
+  letter-spacing: 0;
+  margin-bottom: 10px;
+}
+
+quick-add-modal .product__title{
+  font-size: 2.3rem; 
+  line-height: 1;
+}
+
+quick-add-modal .product__price--wrapper{
+  font-size: 1.6rem;
+}
+
+quick-add-modal product-form{
+  display: block;
+  margin-top: 15px;
+}
+
+quick-add-modal .single-option-selector{
+  margin-bottom: 15px;
+}
+
+quick-add-modal button.product-form__submit{
+  width: 50%;
+  margin-bottom: 40px;
+}
+quick-add-modal .product-description{
+  padding-top: 25px;
+}
+quick-add-modal .product-description--title{
+  font-size: 22px; 
+  letter-spacing: 0; 
+  margin-bottom: 10px;
+}
+
+quick-add-modal .product-description--content{
+  line-height: 1.6; 
+  max-height: 200px; 
+  overflow-y: auto;
+}
+
+quick-add-modal .product-description--content ul{
+  padding-left: 20px;
+}
+
+quick-add-modal .product-description--content p{
+  margin: 5px 0;
+}
+quick-add-modal .slider-button[disabled]{
+  opacity: 0.5;
+}
+quick-add-modal .slider-button.slider-button--next{
+  right: -20px;
+}
+
+quick-add-modal .slider-button.slider-button--prev{
+  left: -20px;
 }

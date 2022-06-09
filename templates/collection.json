@@ -10,14 +10,83 @@
     },
     "product-grid": {
       "type": "main-collection-product-grid",
+      "blocks": {
+        "2be60af8-a35b-4f1e-a25a-2c7a0f721655": {
+          "type": "filter-menu",
+          "settings": {
+            "title": "size-b-cup,size-c-cup,size-d-cup,size-dd-cup,size-e-cup,size-f-cup,size-g-cup,size-h-cup",
+            "filter-menu-title": "Department",
+            "filter-menu-list-items": "beach-bags,beach-dresses,beachwear,bikinis,bikini-bottoms,bikini-sets,bikini-tops,dd-bikinis,beach-hats,jewellery,kaftans,plus-size-swimwear,sale,sandals,sarongs,summer-tops,sunglasses,swimsuits,beach-trousers"
+          }
+        },
+        "48e68a1f-4738-4977-99e6-8ab5f2821049": {
+          "type": "filter-menu",
+          "settings": {
+            "title": "Filter Menu Size",
+            "filter-menu-title": "Size",
+            "filter-menu-list-items": "size-extra-small,size-small,size-medium,size-large,size-extra-large,size-extra-extra-large,size-uk-size-6,size-uk-size-8,size-uk-size-10,size-uk-size-12,size-uk-size-14,size-uk-size-16,size-uk-size-18,size-uk-size-20,size-uk-size-22,size-uk-size-24"
+          }
+        },
+        "2fb780e3-da9b-4377-bd88-06de4fe5b6a0": {
+          "type": "filter-menu",
+          "settings": {
+            "title": "Filter Menu Cup Size",
+            "filter-menu-title": "Cup Size",
+            "filter-menu-list-items": "size-b-cup,size-c-cup,size-d-cup,size-dd-cup,size-e-cup,size-f-cup,size-g-cup,size-h-cup"
+          }
+        },
+        "9be38103-82fe-42e1-a2c4-956d4ee06b7a": {
+          "type": "filter-menu",
+          "settings": {
+            "title": "Filter Menu Brand",
+            "filter-menu-title": "Brand",
+            "filter-menu-list-items": "ashiana,banana-moon,banana-moon-teens,charmline,david,gottex,heidi-klein,iconique,jets,jo-severin,lenny-niemeyer,lepel-london,lepel,lingadore,marie-jo,maryan-mehlhorn,melissa-odabash,miraclesuit,moontide,nuria-ferrer,panache,paolita,phax,pia-rossini,pitusa,roidal,seafolly,seaspray,sunseeker,ted-baker,vix,watercult,west-seventy-nine"
+          }
+        },
+        "695a6dc3-d17c-42f5-9b05-f9122fc4a4c4": {
+          "type": "filter-menu",
+          "settings": {
+            "title": "Filter Menu Price",
+            "filter-menu-title": "Price",
+            "filter-menu-list-items": "under-25,25-50,50-75,75-100,100-125,125-150,150-175,175-200,200-225,225-250,250-275,over-275"
+          }
+        },
+        "df26b289-c104-4aba-a612-1729263e5d7c": {
+          "type": "filter-menu",
+          "settings": {
+            "title": "Filter Menu Colour",
+            "filter-menu-title": "Colour",
+            "filter-menu-list-items": "animal,beige,blacks,blues,browns,cream,floral,gold,greens,greys,metallics,multi,oranges,pinks,purples,reds,spots,stripes,white,yellows"
+          }
+        },
+        "a41db2f2-6ad8-4d9c-b5fd-47d1071afd66": {
+          "type": "filter-menu",
+          "settings": {
+            "title": "Filter Menu Style",
+            "filter-menu-title": "Style",
+            "filter-menu-list-items": "bandeau,bralette,brazilian,bust-support,classic-pant,folded-pant,halter,high-neck,high-waist-pant,hipster-pant,high-leg,padded,push-up,skirted-pant,strapless,tie-pant,tri,tummy-control,underwired"
+          }
+        }
+      },
+      "block_order": [
+        "2be60af8-a35b-4f1e-a25a-2c7a0f721655",
+        "48e68a1f-4738-4977-99e6-8ab5f2821049",
+        "2fb780e3-da9b-4377-bd88-06de4fe5b6a0",
+        "9be38103-82fe-42e1-a2c4-956d4ee06b7a",
+        "695a6dc3-d17c-42f5-9b05-f9122fc4a4c4",
+        "df26b289-c104-4aba-a612-1729263e5d7c",
+        "a41db2f2-6ad8-4d9c-b5fd-47d1071afd66"
+      ],
       "settings": {
-        "products_per_page": 16,
+        "products_per_page": 80,
         "columns_desktop": 4,
         "image_ratio": "adapt",
         "show_secondary_image": false,
-        "show_vendor": false,
+        "show_vendor": true,
         "show_rating": false,
+        "enable_quick_add": true,
         "enable_filtering": true,
+        "filter_type": "drawer",
         "enable_sorting": true,
         "columns_mobile": "2",
         "padding_top": 36,

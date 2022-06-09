@@ -1,3 +1,7 @@
+.collection-hero{
+  background-color: #fafafa;
+  padding: 2.5rem 0;
+}
 .collection-hero__inner {
   display: flex;
   flex-direction: column;
@@ -26,7 +30,7 @@
 
 @media screen and (min-width: 750px) {
   .collection-hero {
-    padding: 0;
+    padding: 2.5rem 0;
   }
 
   .collection-hero__inner {
@@ -37,25 +41,30 @@
 }
 
 .collection-hero__title {
-  margin: 2.5rem 0;
+  font-size: 2.4rem; 
+  font-weight: 600; 
+  text-align: center; 
+  letter-spacing: 0; 
+  margin-bottom: 0;
 }
 
 .collection-hero__title + .collection-hero__description {
   margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.6rem;
-  line-height: calc(1 + 0.5 / var(--font-body-scale));
+  margin-bottom: 0rem;
+  font-size: 1.5rem;
+  line-height: 1.2;
 }
 
 @media screen and (min-width: 750px) {
   .collection-hero__title + .collection-hero__description {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
   }
 
   .collection-hero__description {
-    max-width: 66.67%;
+    max-width: 90%;
+    margin: auto;
   }
 
   .collection-hero--with-image .collection-hero__description {
@@ -98,4 +107,50 @@
     margin-left: 3rem;
     min-height: 20rem;
   }
+}
+
+
+.collection-description__short.desktop{
+  display: none;
+}
+.collection-description--full{
+  display: none;
+}
+.collection-hero__description .trigger-full--description{
+  font-weight: 600;
+  display: inline-block; 
+  margin: 1.5rem 0;
+  text-decoration: none;
+}
+
+.collection-hero__description .trigger-full--description .close{
+  display: none; 
+}
+
+@media only screen and (min-width: 768px){
+  .collection-description__short.desktop{
+    display: block;
+  }
+  .collection-description__short.mobile{
+    display: none; 
+  }
+  .collection-hero__description .trigger-full--description.mobile{
+    display: none;
+  }
+}
+
+.collection-hero__description.show-full-description .collection-description__short{
+  display: none;
+}
+
+.collection-hero__description.show-full-description .collection-description--full{
+  display: block;
+}
+
+.collection-hero__description.show-full-description .more{
+  display: none;
+}
+
+.collection-hero__description.show-full-description .close{
+  display: block;
 }

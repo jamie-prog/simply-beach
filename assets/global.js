@@ -1170,3 +1170,56 @@ class RecentlyViewedProducts extends HTMLElement{
 
 RecentlyViewedProducts.setRecentItem();
 customElements.define("recently-viewed", RecentlyViewedProducts);
+
+
+class CustomCollectionFilter extends HTMLElement{
+  constructor(){
+    super();
+    this.filterGroups = this.querySelectorAll(".filter-group");
+    this.mobileFilterTrigger = this.querySelector(".mobile-filter__toggle"); 
+    this.filterMenu = this.querySelector(".filter-menu")
+    this.filterGroups.forEach((filterGroup) => {
+      let triggerButton = filterGroup.querySelector(".menu-trigger"); 
+      triggerButton.addEventListener('click', ()=>{
+        if(filterGroup.classList.contains('active')){
+          filterGroup.classList.remove('active');
+        }else{
+          if(this.querySelector('.filter-group.active') && this.querySelector('.filter-group.active') != filterGroup){
+            this.querySelector('.filter-group.active').classList.remove('active');
+          }
+
+          filterGroup.classList.add('active');
+        }
+      })
+    })
+
+    this.mobileFilterTrigger.addEventListener('click', ()=>{
+      let filterMenuHeight = document.body.getBoundingClientRect().bottom - this.getBoundingClientRect().bottom;
+      console.log(filterMenuHeight);
+      if(this.filterMenu){
+        if(this.filterMenu.classList.contains('active')){
+          this.filterMenu.classList.remove('active');
+          this.querySelector(".filter-open--text.open").style.display = 'block';
+          this.querySelector(".filter-open--text.close").style.display = 'none';
+        }else{
+          this.filterMenu.classList.add('active');
+          this.filterMenu.style.height = filterMenuHeight + 'px';
+          this.querySelector(".filter-open--text.open").style.display = 'none';
+          this.querySelector(".filter-open--text.close").style.display = 'block';          
+        }
+      }
+    })
+  }
+
+  showDropdown(filterGroup){
+    let filterDropdown = filterGroup.querySelector(".filter-dropdown--body");
+    filterGroup.classList.add('active');
+  }
+
+  openDropdown(filterGroup){
+    let filterDropdown = filterGroup.querySelector(".filter-dropdown--body");
+    filterGroup.classList.remove("active");
+  }
+}
+
+customElements.define('custom-collection-filter', CustomCollectionFilter);
