@@ -96,8 +96,20 @@
                       {% endif %}
                     {% endif %}
                     {%comment%}End of section for the image tooltips{%endcomment%}
-                    
-                    <img src="{{ block.settings[meganav_image] | img_url: 'master'}}" onclick="location.href='{{ block.settings[meganav_col_title_link] }}';" />
+                    <a href="{{block.settings[meganav_col_title_link]}}" class="mega-nav--image__link">
+                      <img
+                        srcset="{%- if block.settings[meganav_image].width >= 510 -%}{{block.settings[meganav_image] | image_url: width: 510}} 510w,{%- endif  -%}
+                        {%- if block.settings[meganav_image].width >= 600 -%}{{block.settings[meganav_image] | image_url: width: 600}} 600w,{%- endif  -%}
+                        {%- if block.settings[meganav_image].width >= 1000 -%}{{block.settings[meganav_image] | image_url: width: 1000}} 1000w,{%- endif  -%}
+                        {{block.settings[meganav_image] | image_url}} {{block.settings[meganav_image].width}}w"
+                        sizes="510px" 
+                        src="{{ block.settings[meganav_image] | image_url: width: 510}}" 
+                        loading="lazy"
+                        width="510"
+                        height="{{block.settings[meganav_image].aspect_ratio | times: 510}}"
+                        alt="{{block.settings[meganav_image].alt}}"
+                        class="meganav-image"/>
+                    </a>
                 
                   {% endif %}
                 {% else %}
