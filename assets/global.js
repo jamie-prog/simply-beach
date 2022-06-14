@@ -288,7 +288,7 @@ class MenuDrawer extends HTMLElement {
     super();
 
     this.mainDetailsToggle = this.querySelector('details');
-
+    this.closeBtns = this.querySelectorAll('.menu-drawer__close-button');
     if (navigator.platform === 'iPhone') document.documentElement.style.setProperty('--viewport-height', `${window.innerHeight}px`);
 
     this.addEventListener('keyup', this.onKeyUp.bind(this));
@@ -298,7 +298,7 @@ class MenuDrawer extends HTMLElement {
 
   bindEvents() {
     this.querySelectorAll('summary').forEach(summary => summary.addEventListener('click', this.onSummaryClick.bind(this)));
-    this.querySelectorAll('button').forEach(button => button.addEventListener('click', this.onCloseButtonClick.bind(this)));
+    this.closeBtns.forEach(button => button.addEventListener('click', this.onCloseButtonClick.bind(this)));
   }
 
   onKeyUp(event) {
@@ -341,7 +341,6 @@ class MenuDrawer extends HTMLElement {
     });
     summaryElement.setAttribute('aria-expanded', true);
     trapFocus(this.mainDetailsToggle, summaryElement);
-    document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
   }
 
   closeMenuDrawer(event, elementToFocus = false) {
@@ -355,7 +354,6 @@ class MenuDrawer extends HTMLElement {
     this.mainDetailsToggle.querySelectorAll('.submenu-open').forEach(submenu => {
       submenu.classList.remove('submenu-open');
     });
-    document.body.classList.remove(`overflow-hidden-${this.dataset.breakpoint}`);
     removeTrapFocus(elementToFocus);
     this.closeAnimation(this.mainDetailsToggle);
   }
@@ -409,6 +407,14 @@ customElements.define('menu-drawer', MenuDrawer);
 class HeaderDrawer extends MenuDrawer {
   constructor() {
     super();
+    this.exTriggerBtns = document.querySelectorAll(".header-menu-drawer-trigger");
+    this.summaryElement = this.querySelector("summary[aria-controls='menu-drawer']");
+    this.exTriggerBtns.forEach((exTriggerBtn)=>{
+      exTriggerBtn.addEventListener('click', ()=>{
+        this.openMenuDrawer(this.summaryElement);
+        this.querySelector("#Details-menu-drawer-container").setAttribute('open', true);
+      });
+    })
   }
 
   openMenuDrawer(summaryElement) {
@@ -423,7 +429,6 @@ class HeaderDrawer extends MenuDrawer {
 
     summaryElement.setAttribute('aria-expanded', true);
     trapFocus(this.mainDetailsToggle, summaryElement);
-    document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
   }
 
   closeMenuDrawer(event, elementToFocus) {

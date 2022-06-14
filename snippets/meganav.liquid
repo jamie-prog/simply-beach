@@ -1,0 +1,213 @@
+<link rel="stylesheet" href="{{'component-meganav.css' | asset_url}}"  media="print" onload="this.media='all'">
+<mega-nav 
+  data-section-id="{{section.id}}" 
+  data-section-type = "meganav" 
+  data-target-menu = "header-main-menu" 
+  data-parent-nav-class = "site-top-nav__list"
+  data-mega-selector-attr = "data-menu-list">
+  <div class="page-width">
+    {% for block in section.blocks %}
+      {% assign imageBlock = false %}
+      <div class="meganav" data-meganav-child='{{ block.settings.meganav_parent | handle }}' {{ block.shopify_attributes }}>
+        {% assign noDropdowns = forloop.length %}
+        {% capture colWidth %}
+  
+          {% for i in (1..4) %}
+            {% assign meganav_col_show = 'meganav_col_show_' | append: i %}
+            {% assign meganav_image_show = 'meganav_image_show_' | append: i %}
+  
+            {% if block.settings[meganav_col_show] == true %}
+                {% assign colCount = i %}
+  
+                {% if block.settings[meganav_image_show] == true %}
+                  {% assign dropdownType = i %}
+                {% else %}
+                  {% assign dropdownType = 0 %}
+                {% endif %}
+            {% endif %}
+          {% endfor %}
+  
+          
+          {% if colCount == 1 %}
+            medium-up--one-half
+          {% elsif colCount == 2 %}
+            {% if dropdownType == 2 %}
+              mega-nav--two-image
+            {% else %}
+              medium-up--one-half
+            {% endif %}
+          {% elsif colCount == 3 %}
+            {% if dropdownType == 3 %}
+              mega-nav--three-image
+            {% else %}
+              medium-up--one-third test-{{ dropdownType }}
+            {% endif %}
+          {% elsif colCount >= 4 %}
+            {% if dropdownType == 4 %}
+              mega-nav--four-image
+            {% else %}
+              medium-up--one-quarter
+            {% endif %}
+          {% endif %}
+        {% endcapture %}
+  
+  
+        <div class="grid grid--gapless">
+          {% for i in (1..4) %}
+            {% assign meganav_col_show = 'meganav_col_show_' | append: i %}
+            {% assign meganav_image_show = 'meganav_image_show_' | append: i %}
+            {% assign meganav_col_title_link = 'meganav_linklist_title_link_' | append: i %}
+  
+            {% if block.settings[meganav_col_show] == true %}
+              {% assign i = forloop.index %}
+              {% assign meganav_image = 'meganav_image_' | append: i %}
+              {% assign meganav_linklist = 'meganav_linklist_' | append: i %}
+              {% assign childlist = block.settings[meganav_linklist] %}
+  
+              <div class="meganav__col {{ colWidth | strip }}
+                {% if block.settings[meganav_image] != blank and block.settings[meganav_image_show] == true %}
+                    meganav__col--image
+                  {% else %}
+                    meganav__col--list
+                {% endif %}
+                ">
+                {% if block.settings[meganav_image] != blank and block.settings[meganav_image_show] == true %}
+                  {% assign imageBlock = true %}
+                  {% if block.settings[meganav_image_show] == true %}
+                      
+                    {%comment%}Start of section for the image tooltips{%endcomment%}
+                    {% if block.settings.meganav_tooltip_show == true %}
+                      {% if block.settings.meganav_tooltip_is_product == true %}
+                              {% assign tooltip_item = all_products[block.settings.meganav_tooltip_product] %}
+                              {% assign tooltip_title = tooltip_item.vendor | append: ' ' | append: tooltip_item.title %}
+                        <a class="meganav__hotspot-tooltip {{block.settings.meganav_tooltip_position}}" href='{{ tooltip_item.url }}'>
+                                {% render 'icon-hotspot-plus' %}
+                                <span class="meganav__hotspot-tooltiptext">
+                                  {{ tooltip_title | truncate: 50 }}<strong>{{ tooltip_item.price | money }}</strong>{% render 'icon-hotspot-forward' %}
+                                </span>
+                        </a>
+                      {% else %}
+                        <a class="meganav__hotspot-tooltip {{block.settings.meganav_tooltip_position}}" href='{{ block.settings.meganav_tooltip_link }}'>
+                                {% render 'icon-hotspot-plus' %}
+                                <span class="meganav__hotspot-tooltiptext">
+                                  {{ block.settings.meganav_tooltip_title }}<strong>{{ block.settings.meganav_tooltip_subtitle }}</strong>{% render 'icon-hotspot-forward' %}
+                                </span>
+                        </a>
+                      {% endif %}
+                    {% endif %}
+                    {%comment%}End of section for the image tooltips{%endcomment%}
+                    
+                    <img src="{{ block.settings[meganav_image] | img_url: 'master'}}" onclick="location.href='{{ block.settings[meganav_col_title_link] }}';" />
+                
+                  {% endif %}
+                {% else %}
+                  {% if block.settings.meganav_top_title_show %}
+                  <div class="meganav__title--wrapper">
+                    {% if forloop.first == true or imageBlock == true and forloop.index == 2 %}
+                    <h4 class="meganav__title"><a href="{{ block.settings.meganav_linklist_title_link }}">{{ block.settings.meganav_linklist_title_text }}</a></h4>
+                    {% else %}
+                    <h4 class="meganav__title">&nbsp;</h4>
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                  <ul class="clearfix">
+                    <li>
+                      {% if block.settings.meganav_linklist_title_show %}
+                      <div class="meganav__title--wrapper">
+                        <h4 class="meganav__title"><a href="{{ block.settings[meganav_col_title_link] }}" target="{{ block.settings[meganav_col_link_target] }}">{{ linklists[childlist].title }}</a></h4>
+                      </div>
+                      {% endif %}
+                    </li>
+                    {% for link in linklists[childlist].links %}
+                    <li><a href="{{ link.url }}" target="{{ block.settings[meganav_col_link_target] }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <span class="meganav--tablet-close">CLOSE</span>
+      </div>
+    {% endfor %}
+  </div>
+</mega-nav>
+
+<script>
+  class MegaNav extends HTMLElement{
+    constructor(){
+      super();
+      this.targetMenuEl = document.querySelector(`[data-menu-name="${this.getAttribute('data-target-menu')}"]`);
+      this.parentNavs = this.targetMenuEl.querySelectorAll(`.${this.getAttribute('data-parent-nav-class')}`);
+      this.megaSelectorAttr = this.getAttribute("data-mega-selector-attr");
+      this.megaNavs = this.querySelectorAll('.meganav');
+
+      // Open Megamenu
+      this.parentNavs.forEach((parentNav) =>{
+        parentNav.addEventListener('mouseenter', ()=>{
+          let targetMegaAttrVal = parentNav.getAttribute(this.megaSelectorAttr);
+          let targetMega = document.querySelector(`[data-meganav-child = "${targetMegaAttrVal}"]`);
+          let oldActivedMega = this.querySelector(".meganav.active");
+          if(targetMega){
+            if(oldActivedMega && oldActivedMega != targetMega){
+              oldActivedMega.classList.remove('active');
+              this.openMegaNav(targetMega);
+            }else{
+              this.openMegaNav(targetMega);
+            }
+          }else if(oldActivedMega){
+            oldActivedMega.classList.remove('active');
+          }
+        });
+      });
+
+
+      // Close Meganav
+      this.megaNavs.forEach((meganav) =>{
+        meganav.addEventListener('mouseleave', (e)=>{
+          this.closeMegaNav(meganav);
+        })
+
+        meganav.querySelector(".meganav--tablet-close").addEventListener('click', ()=>{
+          this.closeMegaNav(meganav);
+        });
+      });
+
+      //re-set the position of meganav when window scroll 
+      document.addEventListener('scroll', ()=>{
+        this.setPosition();
+      })
+
+    }
+
+    connectedCallback(){
+      this.querySelectorAll(".meganav").forEach((meganav) =>{
+        let targetAttribute = meganav.getAttribute("data-meganav-child");
+        let targetNav = document.querySelector(`[data-menu-list = "${targetAttribute}"]`);
+        if(targetNav){
+          targetNav.classList.add('has-megamenu');
+        }
+
+        // Get last list element of mega item 
+        let lastListIndex = meganav.querySelectorAll(".meganav__col--list").length - 1; 
+        meganav.querySelectorAll(".meganav__col--list")[lastListIndex].classList.add('meganav__col--list-last');
+      })
+    }
+
+    openMegaNav(megaItem){
+      // Open new meganav
+      this.setPosition();
+      megaItem.classList.add('active');
+    }
+
+    closeMegaNav(megaItem){
+      megaItem.classList.remove('active');
+    }
+
+    setPosition(){
+      this.style.top = this.targetMenuEl.getBoundingClientRect().bottom + 1 + 'px';
+    }
+  }
+
+  customElements.define('mega-nav', MegaNav);
+</script>

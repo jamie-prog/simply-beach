@@ -5,8 +5,10 @@
 {%- endif -%}
 <noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
 {%- if settings.predictive_search_enabled -%}
-  <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
-  {%- endif -%}
+<predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
+{%- else -%}
+<div class="search-modal__form">
+{%- endif -%}
   <form action="{{ routes.search_url }}" method="get" role="search" class="search">
     <div class="search-field">
       <input class="search__input field__input"
@@ -35,6 +37,7 @@
       </button>
     </div>
 
+    {%- comment -%}
     {%- if settings.predictive_search_enabled -%}
       <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
         <div class="predictive-search__loading-state">
@@ -43,10 +46,12 @@
           </svg>
         </div>
       </div>
-
       <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
     {%- endif -%}
+    {%- endcomment -%}
   </form>
-  {%- if settings.predictive_search_enabled -%}
-  </predictive-search>
-  {%- endif -%}
+{%- if settings.predictive_search_enabled -%}
+</predictive-search>
+{%- else -%}
+</div>
+{%- endif -%}

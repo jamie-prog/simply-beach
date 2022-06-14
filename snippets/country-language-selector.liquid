@@ -23,7 +23,9 @@
           <div class="disclosure">
             <button type="button" class="disclosure__button localization-form__select localization-selector link link--text caption-large" aria-expanded="false" aria-controls="FooterCountryList" aria-describedby="FooterCountryLabel">
               {{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}
-              {% render 'icon-caret' %}
+              <span class="button-icon__wrapper">
+                {% render 'icon-caret' %}
+              </span>
             </button>
             <div class="disclosure__list-wrapper" hidden>
               <ul id="FooterCountryList" role="list" class="disclosure__list list-unstyled">
@@ -55,7 +57,9 @@
               </option>
             {%- endfor -%}
           </select>
-          {% render 'icon-caret' %}
+          <span class="button-icon__wrapper">
+            {% render 'icon-caret' %}
+          </span>
         </div>
         <button class="button button--tertiary">{{ 'localization.update_language' | t }}</button>
       {%- endform -%}
@@ -68,7 +72,9 @@
           <div class="disclosure">
             <button type="button" class="disclosure__button localization-form__select localization-selector link link--text caption-large" aria-expanded="false" aria-controls="FooterLanguageList" aria-describedby="FooterLanguageLabel">
               {{ localization.language.endonym_name | capitalize }}
-              {% render 'icon-caret' %}
+              <span class="button-icon__wrapper">
+                {% render 'icon-caret' %}
+              </span>
             </button>
             <div class="disclosure__list-wrapper" hidden>
               <ul id="FooterLanguageList" role="list" class="disclosure__list list-unstyled">
