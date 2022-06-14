@@ -239,10 +239,9 @@ html.no-js .no-js-hidden {
   }
 }
 
-@media screen and (min-width: 990px) {
+@media screen and (min-width: 1100px) {
   .page-width--narrow {
-    max-width: 72.6rem;
-    padding: 0;
+    max-width: 83.4%;
   }
 
   .page-width-desktop {
@@ -1649,7 +1648,6 @@ details[open] > .share-button__fallback {
   min-height: calc(var(--inputs-border-width) * 2);
   min-width: calc(7rem + (var(--inputs-border-width) * 2));
   position: relative;
-  border: 0;
 }
 
 /* .field:before,
@@ -3820,3 +3818,52 @@ sticky-header.active-sticky{
   height: auto;
 }
 
+/*============================================================================
+  Page breadcrumb
+==============================================================================*/
+.page-breadcrumb {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 25px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1099px) {
+  .page-breadcrumb {
+    margin-top: 25px;
+  }
+}
+
+.page-breadcrumb-container {
+  float: left;
+}
+
+.page-breadcrumb li {
+  float: left;
+  list-style: none;
+}
+
+.page-breadcrumb li a {
+  color: black;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 766px) {
+  .page-breadcrumb {
+    display: none !important;
+  }
+}
+
+/* ========================================================================
+Custom Pages
+===========================================================================*/
+/* ------------ Brands ----------------- */
+.page--beachwear-brands .main-page-title{
+  display: none; 
+}
+.page--beachwear-brands li{
+  list-style: none;
+}
+
+.page--beachwear-brands li a{
+  text-decoration: none;
+}

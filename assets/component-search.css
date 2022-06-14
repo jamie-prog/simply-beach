@@ -1,4 +1,7 @@
 .search__input.field__input {
+  border-top: 0; 
+  border-left: 0; 
+  border-right: 0;
   border-bottom: 1px solid rgb(var(--color-base-text));
   cursor: pointer;
   height: 38px;

@@ -37,7 +37,7 @@
 }
 
 .rte li {
-  list-style: inherit;
+  list-style: none;
 }
 
 .rte li:last-child {
