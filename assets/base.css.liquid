@@ -535,13 +535,13 @@ table:not([class]) th {
   display: none !important;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: 767px) {
   .small-hide {
     display: none !important;
   }
 }
 
-@media screen and (min-width: 750px) and (max-width: 989px) {
+@media screen and (min-width: 768px) and (max-width: 989px) {
   .medium-hide {
     display: none !important;
   }
@@ -4071,4 +4071,94 @@ Custom Pages
 
 .page--gift-vouchers strong{
   font-weight: 500; 
+}
+
+
+/* ===================================================================================
+Blog Template
+======================================================================================*/
+.blog-header{
+  margin-top: -18px;
+}
+@media screen and (min-width: 750px){
+  .blog-header{
+    margin-top: -24px;
+  }
+}
+.blog-hero__wrapper {
+  background-color: #fafafa;
+}
+.blog-hero {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  color: #fff;
+}
+.blog-hero__image{
+  display: block !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+}
+
+.blog-hero__title-wrapper {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  right: 0;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.blog-hero__title-wrapper h1 {
+  font-size: 3.2rem;
+  color: #fff; 
+  letter-spacing: 0px;
+}
+
+.blog-hero select {
+  margin: 10px auto;
+  background-color: #fff;
+  border: none;
+  padding-top: 9px; 
+  padding-left: 9px; 
+  padding-bottom: 9px;
+}
+
+.blog-breadcrumb{
+  margin: 25px 0;
+}
+
+.blog-breadcrumb-container ol, .blog-breadcrumb-container ul{
+  display: flex;
+}
+
+.blog-breadcrumb-container li{
+  list-style: none;
+}
+
+.blog-breadcrumb-container a{
+  text-decoration: none;
+}
+
+.blog-breadcrumb-container a:active{
+  color: rgb(var(--color-base-text));
+}
+
+
+.article-card .article-button{
+  text-transform: uppercase;
+  letter-spacing: 0px; 
+  min-height: 40px;
+  padding: 0 15px;
+  margin-top: 25px;
+  background-color: rgba(var(--color-button), 0.8);
+}
+
+.article-card .article__tags a{
+  text-decoration: underline;
 }

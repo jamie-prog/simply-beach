@@ -16,9 +16,31 @@
   }
 {%- endstyle -%}
 
-{%- paginate blog.articles by 6 -%}
+{%- paginate blog.articles by 12 -%}
+  <div class="blog-header">
+    <div class="blog-hero__wrapper small-hide">
+      <div class="blog-hero">
+        <div class="blog-hero__image" {% if section.settings.blog_header_image %}style="background-image: url({{section.settings.blog_header_image | image_url }})"{% endif %}></div>
+        <div class="blog-hero__title-wrapper">
+          <h1 class="blog-hero__title page-width">{{ page_title }}          
+            {% unless current_tags == blank %} - {{ current_tags }}{% endunless %}
+            {% unless paginate.current_page == 1 %} - Page {{ paginate.current_page }}{% endunless %}
+          </h1>
+          {% if blog.tags.size > 0 %}
+            <select id="BlogTagFilter">
+              <option value="/blogs/{{ blog.handle }}">All topics</option>
+              {% for tag in blog.all_tags %}
+                <option value="/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}" {% if current_tags contains tag %}selected{% endif %}>{{ tag }}</option>
+              {% endfor %}
+            </select>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="main-blog page-width section-{{ section.id }}-padding">
-    <h1 class="title--primary">{{ blog.title | escape }}</h1>
+    {% render 'blog-breadcrumb' %}
+    <h1 class="title--primary hidden">{{ blog.title | escape }}</h1>
 
     <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
       {%- for article in blog.articles -%}
@@ -48,6 +70,31 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type":"header",
+      "content":"Blog Header"
+    },
+    {
+      "type": "range",
+      "id": "blog_header_height",
+      "label": "Blog Header Height",
+      "unit": "px",
+      "min": 100,
+      "max": 400,
+      "step": 10,
+      "default": 220
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_image",
+      "label": "Show Header Image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "blog_header_image",
+      "label": "Blog Header Image"
+    },
     {
       "type": "header",
       "content": "t:sections.main-blog.settings.header.content"
