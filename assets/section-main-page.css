@@ -3,12 +3,13 @@
 }
 
 .main-page-title {
-  margin-bottom: 3rem;
+  margin: 1.5rem 0;
+  letter-spacing: 0;
 }
 
 @media screen and (min-width: 750px) {
   .main-page-title {
-    margin-bottom: 4rem;
+    margin-bottom: 2.5rem 0;
   }
 }
 
