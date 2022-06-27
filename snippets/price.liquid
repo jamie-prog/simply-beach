@@ -24,7 +24,7 @@
   if settings.currency_code_enabled
     assign money_price = price | money
   endif
-
+  assign sale_amount = compare_at_price | minus: price | times: 100.0 | divided_by: compare_at_price
   if target == product and product.price_varies
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif
@@ -64,6 +64,7 @@
             {% endif %}
           </s>
         </span>
+        <span class="sale-amount">{{sale_amount | floor}}% OFF</span>
       {%- endunless -%}
     </div>
     <small class="unit-price caption{% if product.selected_or_first_available_variant.unit_price_measurement == nil %} hidden{% endif %}">

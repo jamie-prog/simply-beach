@@ -3,23 +3,11 @@
     "main": {
       "type": "main-article",
       "blocks": {
-        "featured_image": {
-          "type": "featured_image",
-          "settings": {
-            "image_height": "adapt"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {
             "blog_show_date": true,
-            "blog_show_author": false
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
+            "blog_show_author": true
           }
         },
         "content": {
@@ -28,15 +16,110 @@
         }
       },
       "block_order": [
-        "featured_image",
         "title",
-        "share",
         "content"
       ],
       "settings": {}
+    },
+    "1655243456a7aa88e4": {
+      "type": "slideshow",
+      "blocks": {
+        "1655243456dae82c75-0": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/SEAFOLLY--SummerMemoirs-INDIGO-Hero.jpg",
+            "show_content_box": false,
+            "heading": "New In Seafolly",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "shopify:\/\/collections\/seafolly",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "banner1_tooltip_show": false,
+            "banner1_tooltip_position": "hshp_bottomleft",
+            "banner1_tooltip_is_product": false,
+            "banner1_tooltip_product": "",
+            "banner1_tooltip_link": "",
+            "banner1_tooltip_title": "",
+            "banner1_tooltip_subtitle": ""
+          }
+        },
+        "1655243456dae82c75-1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Blog-Page-Ad-WATERCULT.jpg",
+            "show_content_box": false,
+            "heading": "Watercult",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "shopify:\/\/collections\/watercult",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "banner1_tooltip_show": false,
+            "banner1_tooltip_position": "hshp_bottomleft",
+            "banner1_tooltip_is_product": false,
+            "banner1_tooltip_product": "",
+            "banner1_tooltip_link": "",
+            "banner1_tooltip_title": "",
+            "banner1_tooltip_subtitle": ""
+          }
+        },
+        "dde27d4c-a0d1-427c-b9ec-b49f31b95442": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Blog-Page-Ad-ViX.jpg",
+            "show_content_box": false,
+            "heading": "ViX",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "shopify:\/\/collections\/vix",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "banner1_tooltip_show": false,
+            "banner1_tooltip_position": "hshp_bottomleft",
+            "banner1_tooltip_is_product": false,
+            "banner1_tooltip_product": "",
+            "banner1_tooltip_link": "",
+            "banner1_tooltip_title": "",
+            "banner1_tooltip_subtitle": ""
+          }
+        }
+      },
+      "block_order": [
+        "1655243456dae82c75-0",
+        "1655243456dae82c75-1",
+        "dde27d4c-a0d1-427c-b9ec-b49f31b95442"
+      ],
+      "settings": {
+        "layout": "grid",
+        "slide_height": "medium",
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "1655243456a7aa88e4"
   ]
 }

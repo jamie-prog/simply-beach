@@ -1,8 +1,5 @@
 .product-single__tabs{
-    padding-top: 45px;
-    border-top: 1px solid #efefef;
     display: block;
-    margin-top: 45px;
 }
 
 .product-single__tabs p{
@@ -138,4 +135,12 @@
 .product-single__tabs h5{
     font-size: 1.8rem;
     margin-bottom: 10px;
+}
+
+.product-single__tabs .product-single__details-desc li{
+    list-style: disc;
+}
+
+.product-single__tabs .product-single__details-desc{
+    line-height: 1.6;
 }

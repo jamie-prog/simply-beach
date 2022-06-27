@@ -1,0 +1,19 @@
+{% layout none %}
+{% assign productsfound = 0 %}
+{% paginate search.results by 250 %}
+{% if search.performed %}
+{% for product in search.results %}
+
+{% unless product.object_type == 'product' %}{% continue %}{% endunless %}
+{% assign productsfound = productsfound | plus: 1 %}
+<div id="mp-{{product.handle}}" {% if productsfound > 1 %}class="multiproductsfound"{% endif %}>
+  <a href="{{product.url}}"><img src="{{product.featured_image.src | img_url: '226x' }}" srcset="{{ product.featured_image.src | img_url: '452x' }} 2x" alt="{{product.vendor}} {{product.title}}" loading="lazy"/></a>
+  <h3 class="grid-view-item__vendor">{{product.vendor}}</h3>
+  <h6 class="grid-view-item__title">{{product.title}}</h6>
+  <div class="grid-view-item__meta">
+    <span class="product-price__price"><span class="money">{{product.price | money }}</span></span>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endpaginate %}

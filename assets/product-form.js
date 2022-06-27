@@ -74,7 +74,11 @@ if (!customElements.get('product-form')) {
       this.errorMessageWrapper.toggleAttribute('hidden', !errorMessage);
 
       if (errorMessage) {
-        this.errorMessage.textContent = errorMessage;
+        this.errorMessage.textContent = 'Please select from the available options';
+        // this.errorMessage.textContent = errorMessage;
+        setTimeout(()=>{
+          this.errorMessageWrapper.setAttribute('hidden', '');
+        }, 3000);
       }
     }
   });

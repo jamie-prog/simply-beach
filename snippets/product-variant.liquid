@@ -1,0 +1,218 @@
+{% assign productType = product %}
+{% if upsell %}
+    {% assign productType = upsellProduct %}
+{% elsif package %}
+    {% assign productType = package_item %}
+{% endif %}
+
+{% assign variantReversed = false %}
+{% if productType.options.first != 'Colour' %}
+    {% assign variantReversed = true %}
+{% endif %}
+
+{% assign coloursSize = 0 %}
+{% for option in productType.options_with_values %}
+    {% if variantReversed %}
+        {% if forloop.last %}
+            {% for value in option.values %}
+                {% assign coloursSize = forloop.index %}
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        {% if forloop.first %}
+            {% for value in option.values %}
+                {% assign coloursSize = forloop.index %}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+{% assign multiColour = false %}
+{% if coloursSize > 1 %}
+    {% assign multiColour = true %}
+{% endif %}
+
+{% assign twoOptions = false %}
+{% if productType.options.size > 1 %}
+    {% assign twoOptions = true %}
+{% endif %}
+
+
+{% for product_option in product.options_with_values %}
+{% if product_option.name == 'Other' %}
+    {% assign hasOtherOption = true %}
+{% endif %}
+{% endfor %}
+
+{% assign duemonth = '' %}
+{% assign dueday = '' %}
+{% assign dueyear = '' %}
+
+{% if productType.options.size == 1 and productType.variants[0].title == 'Default Title' %}
+    {% for variant in productType.variants %}
+        {% unless productType.title contains 'E-Gift' or variant.inventory_policy == 'continue' or variant.inventory_management != 'shopify' %}
+            {% if productType.available %}
+                <p {% if upsell %}class="upsell-single-option"{% endif %}>In Stock</p>
+                {% if upsell %}
+                  <input type="hidden" name="id" value="{{productType.selected_or_first_available_variant.id}}">
+                {% endif %}
+            {% else %}
+                {% for tag in product.tags %}
+                  {% if tag contains variant.sku %}
+          
+                    {% if tag contains 'due' %}
+                  {% assign tagsku = tag | split: '"' %}
+                      {% if tagsku[1] == variant.sku %}
+                        {% assign duedate = tag | remove: 'due ' | remove: 'sku ' | split: '"' %}
+                        {% assign dueday = duedate[2] | lstrip | slice: 0, 2 %}
+                        {% assign duemonth = duedate[2] | lstrip | slice: 3, 2 %}
+                        {% assign dueyear = duedate[2] | lstrip | slice: 6, 4 %}
+                    {% endif %}
+                    {% endif %}
+          
+                {% if tag contains 'discontinued' %}
+                  {% assign tagsku = tag | split: '"' %}
+                  {% if tagsku[1] == variant.sku %}
+                  {% assign duedate = tag | remove: 'discontinued ' | remove: 'sku ' | split: '"' %}
+                  {% assign dueday = "" %}
+                        {% assign duemonth = duedate[2] | lstrip %}
+                        {% assign dueyear = "" %}
+                  {% endif %}
+                {% endif %}
+          
+                  {% endif %}
+                {% endfor %}
+
+                <p class="option-product{% if upsell %} upsell-single-option{% endif %}" data-varianttype="single-novariant" data-stockamount="{{ variant.inventory_quantity }}" data-duedate="{{duemonth}}/{{dueday}}/{{dueyear}}">Out of Stock</p>
+            {% endif %}
+        {% endunless %}
+    {% endfor %}
+{% elsif productType.variants.size == 1 %}
+    {% for variant in productType.variants %}
+        {% unless productType.title contains 'E-Gift' or variant.inventory_policy == 'continue' or variant.inventory_management != 'shopify' %}
+            {% if productType.available %}
+                <p {% if upsell %}class="upsell-single-option"{% endif %}>{{variant.title}} - In Stock</p>
+                {% if upsell %}
+                  <input type="hidden" name="id" value="{{productType.selected_or_first_available_variant.id}}">
+                {% endif %}
+            {% else %}
+                {% for tag in product.tags %}
+                  {% if tag contains variant.sku %}
+          
+                    {% if tag contains 'due' %}
+                  {% assign tagsku = tag | split: '"' %}
+                      {% if tagsku[1] == variant.sku %}
+                        {% assign duedate = tag | remove: 'due ' | remove: 'sku ' | split: '"' %}
+                        {% assign dueday = duedate[2] | lstrip | slice: 0, 2 %}
+                        {% assign duemonth = duedate[2] | lstrip | slice: 3, 2 %}
+                        {% assign dueyear = duedate[2] | lstrip | slice: 6, 4 %}
+                    {% endif %}
+                    {% endif %}
+          
+                {% if tag contains 'discontinued' %}
+                  {% assign tagsku = tag | split: '"' %}
+                  {% if tagsku[1] == variant.sku %}
+                  {% assign duedate = tag | remove: 'discontinued ' | remove: 'sku ' | split: '"' %}
+                  {% assign dueday = "" %}
+                        {% assign duemonth = duedate[2] | lstrip %}
+                        {% assign dueyear = "" %}
+                  {% endif %}
+                {% endif %}
+          
+                  {% endif %}
+                {% endfor %}
+                {% assign variantStockText = '' %}
+                {% if product.tags contains 'BIS' %}
+                  {% assign variantStockText = '&ndash; Out of Stock / Notify Me' %}
+                {% else%}
+                  {% assign variantStockText = '&ndash; Out of Stock' %}
+                {% endif%}
+                <p class="option-product{% if upsell %} upsell-single-option{% endif %}" data-varianttype="single-variant" data-stockamount="{{ variant.inventory_quantity }}" data-duedate="{{duemonth}}/{{dueday}}/{{dueyear}}">{{variant.title}} {{variantStockText}}</p>
+            {% endif %}
+        {% endunless %}
+    {% endfor %}
+{% else %}
+    <div class="select product-single-option-selector {% if package %} product-form__package-select{% endif %}">
+        <select {% if upsell %}name = "id"{% endif %} id="Option-{{ section.id }}-0" class="select__select single-option-selector {% if upsell %}upsell-selector{%else%}product-selector{% endif %}" form="{{product_form_id}}" {{productType.title}}>
+            <option selected="selected" disabled="disabled">Select Option</option>
+            
+            {% for variant in productType.variants %}
+          
+                {% assign variantStockText = '' %}
+                {% unless productType.title contains 'E-Gift' or variant.inventory_policy == 'continue' or variant.inventory_management != 'shopify' %}
+                    {% if variant.inventory_quantity <= 0 %}
+          				{% if product.tags contains 'BIS' %}
+          	              {% assign variantStockText = '&ndash; Out of Stock / Notify Me' %}
+          				{% else%}
+          					{% assign variantStockText = '&ndash; Out of Stock' %}
+          				{% endif %}
+                    {% else %}
+                        {% assign variantStockText = '&ndash; In Stock' %}
+                    {% endif %}
+                {% endunless %}
+          
+                {% for tag in product.tags %}
+                  {% if tag contains variant.sku %}
+          
+                    {% if tag contains 'due' %}
+                  {% assign tagsku = tag | split: '"' %}
+                      {% if tagsku[1] == variant.sku %}
+                        {% assign duedate = tag | remove: 'due ' | remove: 'sku ' | split: '"' %}
+                        {% assign dueday = duedate[2] | lstrip | slice: 0, 2 %}
+                        {% assign duemonth = duedate[2] | lstrip | slice: 3, 2 %}
+                        {% assign dueyear = duedate[2] | lstrip | slice: 6, 4 %}
+                    {% endif %}
+                    {% endif %}
+          
+                {% if tag contains 'discontinued' %}
+                  {% assign tagsku = tag | split: '"' %}
+                  {% if tagsku[1] == variant.sku %}
+                  {% assign duedate = tag | remove: 'discontinued ' | remove: 'sku ' | split: '"' %}
+                  {% assign dueday = "" %}
+                        {% assign duemonth = duedate[2] | lstrip %}
+                        {% assign dueyear = "" %}
+                  {% endif %}
+                {% endif %}
+          
+                  {% endif %}
+                {% endfor %}
+
+                <option class="option-product" value="{{ variant.id }}" data-varianttype="multi-variant" data-stockamount="{{ variant.inventory_quantity }}" data-duedate="{{duemonth}}/{{dueday}}/{{dueyear}}">        
+                    {% if variantReversed %}
+                        {% if hasOtherOption %}
+                  {{ variant.option1 }}, {{ variant.option3 }} {{ variantStockText }}
+                        {% else %}
+                  {% if multiColour and twoOptions %}{{ variant.option2 }}, {% endif %}{{ variant.option1 }} {{ variantStockText }}
+                        {% endif %}
+                    {% else %}
+                        {% if twoOptions %}
+                            {% if multiColour %}{{ variant.option1 }}, {% endif %}{{ variant.option2 }}
+                        {% else %}
+                            {{ variant.option1 }}
+                        {% endif %} {{ variantStockText }}
+                    {% endif %}
+                </option>
+          
+                {% assign dueday = "" %}
+                {% assign duemonth = "" %}
+                {% assign dueyear = "" %}
+          
+            {% endfor %}
+        </select>
+        {% render 'icon-caret' %}
+    </div>
+{% endif %}
+
+{% if package %}
+    <span class="single-option-warning-{{ package_item.id }} package_stock_level visually-hidden">
+        {% if current_package_item.inventory_quantity <= 0 %}
+            Out of Stock
+        {% else %}
+            {% if current_package_item.inventory_quantity <= 3 %}
+                Only {{ current_package_item.inventory_quantity }} Left
+            {% else %}
+                In Stock
+            {% endif %}
+        {% endif %}
+    </span>
+{% endif %}

@@ -1,3 +1,52 @@
+var Shopify = Shopify || {};
+// ---------------------------------------------------------------------------
+// Money format handler
+// ---------------------------------------------------------------------------
+Shopify.money_format = "${{amount}}";
+Shopify.formatMoney = function(cents, format) {
+  if (typeof cents == 'string') { cents = cents.replace('.',''); }
+  var value = '';
+  var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+  var formatString = (format || this.money_format);
+
+  function defaultOption(opt, def) {
+     return (typeof opt == 'undefined' ? def : opt);
+  }
+
+  function formatWithDelimiters(number, precision, thousands, decimal) {
+    precision = defaultOption(precision, 2);
+    thousands = defaultOption(thousands, ',');
+    decimal   = defaultOption(decimal, '.');
+
+    if (isNaN(number) || number == null) { return 0; }
+
+    number = (number/100.0).toFixed(precision);
+
+    var parts   = number.split('.'),
+        dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+        cents   = parts[1] ? (decimal + parts[1]) : '';
+
+    return dollars + cents;
+  }
+
+  switch(formatString.match(placeholderRegex)[1]) {
+    case 'amount':
+      value = formatWithDelimiters(cents, 2);
+      break;
+    case 'amount_no_decimals':
+      value = formatWithDelimiters(cents, 0);
+      break;
+    case 'amount_with_comma_separator':
+      value = formatWithDelimiters(cents, 2, '.', ',');
+      break;
+    case 'amount_no_decimals_with_comma_separator':
+      value = formatWithDelimiters(cents, 0, '.', ',');
+      break;
+  }
+
+  return formatString.replace(placeholderRegex, value);
+};
+
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(
@@ -748,12 +797,19 @@ customElements.define('slideshow-component', SlideshowComponent);
 class VariantSelects extends HTMLElement {
   constructor() {
     super();
+    this.isOriginSelector = this.dataset.isOrigin == "true" ? true : false;
     this.addEventListener('change', this.onVariantChange);
   }
 
   onVariantChange() {
-    this.updateOptions();
-    this.updateMasterId();
+    if(!this.isOriginSelector){
+      this.updateOptions();
+      this.updateMasterId();
+    } else {
+      this.currentVariant = this.getVariantData().find((variant) => {
+        return variant.id == this.querySelector(".single-option-selector").value;
+      })
+    }
     this.toggleAddButton(true, '', false);
     this.updatePickupAvailability();
     this.removeErrorMessage();
@@ -763,7 +819,7 @@ class VariantSelects extends HTMLElement {
       this.setUnavailable();
     } else {
       this.updateMedia();
-      this.updateURL();
+      //this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
       this.updateShareUrl();
@@ -902,6 +958,61 @@ class VariantRadios extends VariantSelects {
 
 customElements.define('variant-radios', VariantRadios);
 
+
+class UpsellVariant extends HTMLElement{
+  constructor(){
+    super();
+  }
+  connectedCallback(){
+    this.productForm = document.getElementById(`${this.dataset.productFormId}`);
+    this.productData = JSON.parse(this.querySelector("#upsell-product-data").textContent);
+    this.addToCart = this.productForm.querySelector("[type='submit']");
+    this.addToCartText = this.addToCart.querySelector(".add-to-cart-text");
+    this.salePriceEl = this.productForm.querySelector(".price-item--sale"); 
+    this.comparePriceEl = this.productForm.querySelector(".price-item--compare");
+    this.addEventListener('change', this.upsellVariantChange);
+  }
+  upsellVariantChange(){
+    const selectedVariantId = this.querySelector("[name='id']").value;
+    this.getSelectedVariant(selectedVariantId);
+    if(this.selectedVariant){
+     this.updatePrice();
+     this.updateButton(); 
+    }
+  }
+  getSelectedVariant(vid){
+    this.selectedVariant = this.productData.variants.find((variant) => {
+      return variant.id == vid;
+    })
+  }
+
+  updatePrice(){
+    this.salePriceEl.textContent = Shopify.formatMoney(this.selectedVariant.price, window.MoneyFormat);
+    if(this.selectedVariant.compare_at_price > this.selectedVariant.price){
+      if(!this.comparePriceEl){
+        this.comparePriceEl = document.createElement("span");
+        this.comparePriceEl.classList.add("price-item--sale");
+        this.productForm.querySelector(".product__price--wrapper").appendChild(this.comparePriceEl);
+      }
+      this.comparePriceEl.innerHTML = `RRP <s>${Shopify.formatMoney(this.selectedVariant.compare_at_price, window.MoneyFormat)}</s>`
+    }else{
+      this.comparePriceEl.remove();
+    }
+  }
+
+  updateButton(){
+    if(this.selectedVariant.available){
+      this.addToCart.removeAttribute('disabled');
+      this.addToCartText.textContent = window.variantStrings.addToCart;
+    }else{
+      this.addToCart.setAttribute('disabled', 'disable');
+      this.addToCartText.textContent = window.variantStrings.soldOut;
+    }
+  }
+  
+}
+
+customElements.define('upsell-variant-selector', UpsellVariant);
 /*======================================================
 Custom Scripts
 ========================================================*/
@@ -1039,7 +1150,8 @@ class ProductSingleTabs extends HTMLElement{
         e.preventDefault();
         let detailTabHeader = document.querySelector("[data-tab-header='details']");
         let tabClientRectY = this.getBoundingClientRect().top;
-        let scrollAmount = tabClientRectY + 100;
+        // let scrollAmount = Math.abs(tabClientRectY - document.body.getBoundingClientRect().top) + 100;
+        let scrollAmount = $(this).offset().top - 100;
         this.showTabs(detailTabHeader);
         window.scrollTo({top: scrollAmount, behavior: 'smooth'});
       })
@@ -1213,6 +1325,12 @@ class CustomCollectionFilter extends HTMLElement{
           this.querySelector(".filter-open--text.close").style.display = 'block';          
         }
       }
+    });
+    document.body.addEventListener('click', (e) => {
+      let activedFilterGroup = this.querySelector(".filter-group.active");
+      if(activedFilterGroup && !e.target.closest(".filter-group")){
+        activedFilterGroup.classList.remove("active");
+      }
     })
   }
 
@@ -1228,3 +1346,60 @@ class CustomCollectionFilter extends HTMLElement{
 }
 
 customElements.define('custom-collection-filter', CustomCollectionFilter);
+
+class ProductMatchingColours extends HTMLElement{
+  constructor(){
+      super();
+  }
+  connectedCallback(){
+      const searchUrl = `/search?type=product&q=handle:${this.dataset.searchHandle}*&view=match`;
+      fetch(searchUrl)
+          .then( response => response.text())
+          .then( matcheddata => {
+              let hasproducts = matcheddata.indexOf("multiproductsfound");
+              if (hasproducts > 1) {
+                  this.querySelector("#matchedproducts").innerHTML = (matcheddata);
+                  //document.getElementById('matchedproductsbutton').style.display = "inline-block";
+                  this.removeSelf();
+                  $(".matching-colors-slider").slick(
+                    {
+                      infinite: false,
+                      slidesToShow: 5,
+                      slidesToScroll: 1,
+                      arrows: false,
+                      dots: false,
+                      fade: false,
+                      autoplay: false,
+                      infinite: true,
+                      pauseOnHover: false,
+                      responsive: [
+                        {
+                          breakpoint: 1280,
+                          settings: {
+                            dots: true,
+                            arrows: false,
+                            slidesToShow: 3
+                          }
+                        },
+                        {
+                          breakpoint: 768,
+                          settings: {
+                            dots: true,
+                            arrows: false,
+                            slidesToShow: 1
+                          }
+                        }
+                      ]
+                    }
+                  );                  
+              }else{
+                this.classList.add('hidden');
+              }
+          })
+  }
+
+  removeSelf(){
+      document.getElementById(`mp-${this.dataset.productHandle}`).remove();
+  }
+}
+customElements.define('product-matching-colours', ProductMatchingColours)

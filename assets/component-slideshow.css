@@ -116,23 +116,26 @@ slideshow-component .slideshow.banner {
 .slideshow__controls .slider-button--prev svg.icon, .slideshow__controls .slider-button--next svg.icon{
   width: 20px; 
   height: 20px; 
-  color: #fff; 
+  color: #aea37f; 
 }
 
-.slideshow__controls .slider-button--prev{
-  left: -12px;
+.slideshow__controls .slider-button.slider-button--prev{
+  left: -15px;
 }
 
-.slideshow__controls .slider-button--next{
-  right: -12px; 
+.slideshow__controls .slider-button.slider-button--next{
+  right: -15px; 
 }
 
-@media only screen and (max-width: 1470px){
-  .slideshow__controls .slider-button--prev{
+@media only screen and (max-width: 1469px){
+  .slideshow__controls .slider-button--prev svg.icon, .slideshow__controls .slider-button--next svg.icon{
+    color: #fff; 
+  }
+  .slideshow__controls .slider-button.slider-button--prev{
     left: 10px;
   }
   
-  .slideshow__controls .slider-button--next{
+  .slideshow__controls .slider-button.slider-button--next{
     right: 10px; 
   }
 }

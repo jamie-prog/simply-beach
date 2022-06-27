@@ -29,11 +29,9 @@
           "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
-        "f3abdb12-9654-43d5-9e7e-9c48202c6150": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<div class=\"product-short__description\">{{- product.description | truncatewords: 50 | strip_html -}}... <a href=\"#readmore\" id=\"readmore\">read more<\/a><\/div>"
-          }
+        "ced198c8-d52d-40ed-951c-28118d0d64b0": {
+          "type": "description",
+          "settings": {}
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -96,7 +94,7 @@
         "caption",
         "price",
         "07ee9610-d174-4303-9e89-8297cc5af031",
-        "f3abdb12-9654-43d5-9e7e-9c48202c6150",
+        "ced198c8-d52d-40ed-951c-28118d0d64b0",
         "variant_picker",
         "buy_buttons",
         "dcd7da34-62b8-4d0b-9fc2-6c32cfe09eed",

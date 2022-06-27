@@ -341,6 +341,7 @@
     },
     "16538663589bb9e9a4": {
       "type": "apps",
+      "disabled": true,
       "blocks": {
         "447f65b1-0425-4f73-9de7-62d01efb822e": {
           "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/form-embed-block\/2632fe16-c075-4321-a88b-50b567f42507",

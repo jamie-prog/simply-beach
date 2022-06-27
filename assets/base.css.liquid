@@ -1282,7 +1282,7 @@ button.shopify-payment-button__button--unbranded,
 .customer button,
 button.shopify-payment-button__button--unbranded {
   min-width: calc(12rem + var(--buttons-border-width) * 2);
-  min-height: calc(4.5rem + var(--buttons-border-width) * 2);
+  /* min-height: calc(4.5rem + var(--buttons-border-width) * 2); */
 }
 
 .shopify-payment-button__button--branded {
@@ -1303,13 +1303,14 @@ button.shopify-payment-button__button--unbranded {
   padding: 0 3rem;
   cursor: pointer;
   font: inherit;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   text-decoration: none;
   color: rgb(var(--color-button-text));
   transition: box-shadow var(--duration-short) ease;
   -webkit-appearance: none;
   appearance: none;
   background-color: rgba(var(--color-button), var(--alpha-button-background));
+  height: 42px;
 }
 
 .button:before,
@@ -1397,7 +1398,7 @@ button.shopify-payment-button__button--unbranded {
   font-size: 1.2rem;
   padding: 1rem 1.5rem;
   min-width: calc(9rem + var(--buttons-border-width) * 2);
-  min-height: calc(3.5rem + var(--buttons-border-width) * 2);
+  /* min-height: calc(3.5rem + var(--buttons-border-width) * 2); */
 }
 
 .button--small {
@@ -2129,7 +2130,7 @@ input[type='checkbox'] {
   align-items: center;
   font-size: 0.9rem;
   bottom: 0.8rem;
-  left: 2.2rem;
+  left: 50%;
   line-height: calc(1 + 0.1 / var(--font-body-scale));
 }
 
@@ -3343,6 +3344,7 @@ progress-bar .progress-bar-container{
   max-height: 0; 
   opacity: 0; 
   visibility: hidden;
+  overflow-y: scroll;
 }
 
 .filter-group.active .filter-dropdown--body{
@@ -3605,6 +3607,7 @@ progress-bar .progress-bar-container{
   line-height: 1.2; 
   text-decoration: none;
   min-height: 40px;
+  display: block;
 }
 
 .collection-product-card .card--vendor{
@@ -3612,6 +3615,9 @@ progress-bar .progress-bar-container{
   font-weight: 300; 
   letter-spacing: 0; 
   text-transform: uppercase;
+  background-color: rgba(200,200,200, 0.3);
+  display: inline-block;
+  padding: 0 5px;
 }
 
 
@@ -3811,6 +3817,7 @@ sticky-header.active-sticky{
 .sticky-header--icon{
   display: flex;
   align-items: center;
+  position: relative; 
 }
 
 .sticky-header--icon svg{
@@ -4163,3 +4170,6 @@ Blog Template
   text-decoration: underline;
 }
 
+.product-form__submit.button{
+  text-transform: uppercase;
+}

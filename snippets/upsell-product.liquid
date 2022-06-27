@@ -1,5 +1,8 @@
-<upsell-product data-upsell-sku="{{upsell_sku}}"></upsell-product>
+<upsell-product data-upsell-sku="{{upsell_sku}}">
+  <div class="upsell-product__heading">Complete the look</div>
+</upsell-product>
 <script>
+  
   class UpsellSku extends HTMLElement{
     constructor(){
       super();
@@ -29,6 +32,17 @@
 <style>
   upsell-product{
     display: block;
+    padding-top: 25px; 
+    border-top: 1px solid #e5e5e5;
+    margin-top: 10px;
+  }
+  .upsell-product__heading{
+    font-size: 1.8rem; 
+    margin-bottom: 10px; 
+    padding-bottom: 10px;
+  }
+  upsell-product .product-form__error-message-wrapper{
+    margin-top: 10px;
   }
   upsell-product button[type="submit"]{
     margin-top: 10px;
