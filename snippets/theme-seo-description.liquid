@@ -1,0 +1,27 @@
+{% assign multistore = settings.multistore %}
+{% if multistore contains 'beach' %}
+  {% assign descriptionboiler = "Browse Designer Swimwear &amp; Beachwear Now. Free Returns & Free UK Delivery on Orders Over £100!" %}
+{% elsif multistore contains 'hike' %}
+  {% assign descriptionboiler = "Shop Outdoor Clothing &amp; Skiwear Now. Easy Returns and Free UK Delivery on Orders Over £50!" %}
+{% elsif multistore contains 'scuba' %}
+  {% assign descriptionboiler = "Browse Scuba &amp; Snorkelling Gear Online. UK’s Award Winning Retailer & 5 Star Customer Feedback!" %}
+{% elsif multistore contains 'swim' %}
+  {% assign descriptionboiler = "Shop Quality Swimwear &amp; Equipment Now. Free Tracked UK Delivery Over £15 & Easy Returns" %}
+{% endif %}
+
+{% if template contains 'collection' %} 
+  {% assign customdescription = collections[collection.handle].metafields.seodescription[collections[current_tags.first].handle] %}
+  {% if customdescription %}
+    <meta name="description" content="{{ customdescription| strip_html }} {{descriptionboiler}}">
+  {% elsif page_description %}
+    <meta name="description" content="{{ page_description | escape }} {{descriptionboiler}}">
+  {% endif %}
+{% elsif template contains 'product' %}
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }} {{descriptionboiler}}">
+  {% endif %}
+{% else %}
+  {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+{% endif %}

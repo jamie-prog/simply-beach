@@ -294,7 +294,7 @@
               <div {{ block.shopify_attributes }}>
                 {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
                 {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
-                  <input type="hidden" name="id" >
+                  <input type="hidden" name="id" value="{{product.selected_or_first_available_variant.id}}">
                   {{ form | payment_terms }}
                 {%- endform -%}
               </div>
@@ -519,7 +519,7 @@
                   </div>
   
                   {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                    <input type="hidden" name="id" disabled>
+                    <input type="hidden" name="id" disabled value="{{product.selected_or_first_available_variant.id}}">
                     <div class="product-form__buttons">
                       <button
                         type="submit"
@@ -600,6 +600,10 @@
             {%- when 'end-div' -%}
               </div>
               <!-- End Division -->
+            {%- when 'sizeguide' -%}
+              {% unless product.type contains 'ackage' %}
+                <a href="javascript:void(0)" class="product-single__size-btn">Size Guide</a>
+              {% endunless %}
             {%- when 'upsell-product' -%}
               {% assign taggedUpsell = false %}
               {% for tag in product.tags %}
@@ -654,6 +658,18 @@
     </div>
   </product-modal>
 
+  {%- assign size_guide_popup = section.blocks | where: 'type', "sizeguide" -%}
+  {%- if size_guide_popup  -%}
+    {%- unless product.type contains 'ackage' -%}
+      <product-size-guide class="size-guide__wrapper">
+        <div class="size-guide__wrapper-content">
+          <div class="product-single__size" data-app="eastsideco_sizeGuides" data-shop="{{ shop.permanent_domain }}" data-tags="{{ product.tags | join:',' | escape }}" data-metafields="{{ product.metafields.esc-size-matters.tag }}"></div>
+          <button class="product-single__size-btn-close featherlight-close-icon featherlight-close">X</button>
+          <div class="scroll-helper">{% include 'icon-chevron-right' %}</div>
+        </div>
+      </product-size-guide>
+    {%- endunless -%}
+  {%- endif -%}
   {% assign popups = section.blocks | where: "type", "popup" %}
   {%- for block in popups -%}
     <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal" {{ block.shopify_attributes }}>
@@ -1126,6 +1142,10 @@
     {
       "type":"end-div", 
       "name":"End Division"
+    },
+    {
+      "type":"sizeguide", 
+      "name":"SizeGuide"
     },
     {
       "type":"upsell-product", 

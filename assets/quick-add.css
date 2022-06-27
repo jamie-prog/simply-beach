@@ -196,9 +196,14 @@ quick-add-modal product-form{
   margin-top: 15px;
 }
 
-quick-add-modal .single-option-selector{
-  margin-bottom: 15px;
+quick-add-modal upsell-variant-selector{
+  display: block;
+  margin-bottom: 15px; 
 }
+
+/* quick-add-modal .single-option-selector{
+  margin-bottom: 15px;
+} */
 
 quick-add-modal button.product-form__submit{
   width: 50%;

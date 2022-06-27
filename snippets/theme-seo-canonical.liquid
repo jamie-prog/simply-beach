@@ -1,0 +1,22 @@
+{% assign multistore = settings.multistore %}
+{% if multistore contains 'beach' %}
+  {% assign storeurl = "https://www.simplybeach.com" %}
+{% elsif multistore contains 'hike' %}
+  {% assign storeurl = "https://www.simplyhike.co.uk" %}
+{% elsif multistore contains 'scuba' %}
+  {% assign storeurl = "https://www.simplyscuba.com" %}
+{% elsif multistore contains 'swim' %}
+  {% assign storeurl = "https://www.simplyswim.com" %}
+{% endif %}
+
+{% if template contains 'collection' %}
+  {% if current_tags %}
+    {% capture canonicalURL  %}{{storeurl}}/collections/{{collection.handle}}/{{current_tags | join: '+'}}{% endcapture %}
+  {% else %}
+    {% capture canonicalURL  %}{{storeurl}}/collections/{{collection.handle}}{% endcapture %}
+  {% endif %}
+{% else %}
+  {% assign canonicalURL = canonical_url %}
+{% endif %}
+  
+<link rel="canonical" href="{{ canonicalURL }}">           

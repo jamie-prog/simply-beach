@@ -158,7 +158,15 @@
               </svg>
               <span class="product-form__error-message"></span>
             </div>
+            {%- assign upsell_product_formid = 'upsell-product--form-' | append: {{product.id}} -%}
             {%- form 'product', product, id: upsell_product_formid, class: 'upsell-product-form' -%}
+            
+            <upsell-variant-selector data-product-form-id="{{upsell_product_formid}}">
+              {% render 'product-variant', upsellProduct: product, upsell: true, product_form_id: upsell_product_formid %}
+              <script type="application/json" id="upsell-product-data">{{- product | json-}}</script>
+            </upsell-variant-selector>
+
+            {%- comment -%}
             <div class="single-option-selector select {% if product.has_only_default_variant%}hidden{% endif %}">
               <select name="id" id="upsell__variant--selector--{{product.id}}" class="select__select">
                 {% for variant in product.variants %}
@@ -167,6 +175,7 @@
               </select>
               {% render 'icon-caret' %}
             </div>
+            {%- endcomment -%}
             <div class="product-form__buttons">
               <button type="submit" class="product-form__submit button button--primary button--full-width" name="add">{{ 'products.product.add_to_cart' | t | upcase}}
                 <div class="loading-overlay__spinner hidden">

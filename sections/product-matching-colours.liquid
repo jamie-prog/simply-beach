@@ -5,7 +5,7 @@
             {% assign producttitleend = producttitleall[1] | lstrip | replace: ' ', '-' | downcase %}<br />
             {% assign searchhandle = product.handle | replace: producttitleend, '' %}
             <product-matching-colours data-search-handle = "{{searchhandle}}" data-product-handle = "{{product.handle}}"> 
-                <div class="matchedproducts" id="matchedproducts_header"><h2 class="text-center">Other Available Colours</h2>
+                <div class="matchedproducts" id="matchedproducts_header"><h2 class="text-center">Other Available Colours</h2></div>
                 <div id="matchedproducts" class="matching-colors-slider"></div>      
             </product-matching-colours>
         </div>

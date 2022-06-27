@@ -19,12 +19,15 @@
 
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte center">
+          <div class="collection-description__short desktop">{{collection.description | truncate: 500 | strip_html}}</div>
+          <div class="collection-description__short mobile">{{collection.description | truncate: 210 | strip_html}}</div>
+          {%- comment -%}
           {%- if collection.description.size > 500 -%}
-            <div class="collection-description__short desktop">{{collection.description | truncate: 500 | strip_html}}</div>
-            <div class="collection-description__short mobile">{{collection.description | truncate: 210 | strip_html}}</div>
           {%- elsif collection.description.size > 210 -%}
             <div class="collection-description__short mobile">{{collection.description | truncate: 210 | strip_html}}</div>
           {%- endif -%}
+          {%- endcomment -%}
+
           
           {%- if collection.description.size > 500 -%}
           <div class="collection-description--full">{{ collection.description }}</div>

@@ -1356,44 +1356,52 @@ class ProductMatchingColours extends HTMLElement{
       fetch(searchUrl)
           .then( response => response.text())
           .then( matcheddata => {
-              let hasproducts = matcheddata.indexOf("multiproductsfound");
-              if (hasproducts > 1) {
-                  this.querySelector("#matchedproducts").innerHTML = (matcheddata);
+              let matchedDatas = new DOMParser().parseFromString(matcheddata, 'text/html').querySelectorAll(".matching-product-item");
+              let matchedSize = 0;
+              if (matchedDatas.length > 0) {
+                  matchedDatas.forEach((matchedData) =>{
+                    if(this.dataset.productHandle != matchedData.dataset.productHandle){
+                      this.querySelector("#matchedproducts").appendChild(matchedData);
+                      matchedSize = matchedSize + 1;
+                    };
+                  });
                   //document.getElementById('matchedproductsbutton').style.display = "inline-block";
-                  this.removeSelf();
-                  $(".matching-colors-slider").slick(
-                    {
-                      infinite: false,
-                      slidesToShow: 5,
-                      slidesToScroll: 1,
-                      arrows: false,
-                      dots: false,
-                      fade: false,
-                      autoplay: false,
-                      infinite: true,
-                      pauseOnHover: false,
-                      responsive: [
-                        {
-                          breakpoint: 1280,
-                          settings: {
-                            dots: true,
-                            arrows: false,
-                            slidesToShow: 3
+                  // this.removeSelf();
+                  if(matchedSize > 0 ){
+                    $(".matching-colors-slider").slick(
+                      {
+                        infinite: false,
+                        slidesToShow: 5,
+                        slidesToScroll: 1,
+                        arrows: false,
+                        dots: false,
+                        fade: false,
+                        autoplay: false,
+                        infinite: true,
+                        pauseOnHover: false,
+                        responsive: [
+                          {
+                            breakpoint: 1280,
+                            settings: {
+                              dots: true,
+                              arrows: false,
+                              slidesToShow: 3
+                            }
+                          },
+                          {
+                            breakpoint: 768,
+                            settings: {
+                              dots: true,
+                              arrows: false,
+                              slidesToShow: 1
+                            }
                           }
-                        },
-                        {
-                          breakpoint: 768,
-                          settings: {
-                            dots: true,
-                            arrows: false,
-                            slidesToShow: 1
-                          }
-                        }
-                      ]
-                    }
-                  );                  
-              }else{
-                this.classList.add('hidden');
+                        ]
+                      }
+                    );                  
+                  }else{
+                    this.classList.add('hidden');
+                  }
               }
           })
   }
@@ -1402,4 +1410,30 @@ class ProductMatchingColours extends HTMLElement{
       document.getElementById(`mp-${this.dataset.productHandle}`).remove();
   }
 }
-customElements.define('product-matching-colours', ProductMatchingColours)
+customElements.define('product-matching-colours', ProductMatchingColours);
+
+class ProductSizeGuide extends HTMLElement{
+  constructor(){
+    super();
+  }
+
+  connectedCallback(){
+    let sizeGuideTrigger = document.querySelector(".product-single__size-btn");
+    sizeGuideTrigger.addEventListener('click', (e)=>{
+      e.preventDefault();
+      this.classList.add("size-guide__wrapper--active");
+    });
+    this.closeButton = this.querySelector(".product-single__size-btn-close");
+    this.closeButton.addEventListener('click', ()=>{
+      this.classList.remove("size-guide__wrapper--active"); 
+    })
+    document.body.addEventListener("click", (e)=>{
+      console.log(e.target);
+      if(e.target == this){
+        this.classList.remove("size-guide__wrapper--active");
+      }
+    })
+  }
+}
+
+customElements.define('product-size-guide', ProductSizeGuide);

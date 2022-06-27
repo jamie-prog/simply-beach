@@ -1,0 +1,64 @@
+{% assign collectionhandlesplit = collection.handle | split: '-' %}
+
+{% if current_tags %}
+     {% capture seo_title %}
+      {% if current_tags %}
+        {% for handle in collectionhandlesplit %}{{ handle | capitalize }} {% endfor %}{{ collections[current_tags.first].title -}} 
+      {% endif -%}
+      {% unless page_title contains shop.name %}
+       | {{ shop.name }}
+      {% endunless %}
+      {% if current_page != 1 %}
+         &nbsp;&ndash; {{ 'general.meta.page' | t: page: current_page }} 
+      {% endif %}
+  {% endcapture %}
+       
+  {% else %}
+    {% capture seo_title %}
+      {% unless page_title contains shop.name %}
+        {{ page_title }} | {{ shop.name }}
+    {% endunless %}
+      {% if current_page != 1 %}
+        &nbsp;&ndash; {{ 'general.meta.page' | t: page: current_page }} 
+      {% endif %}
+  {% endcapture %}         
+  {% endif %}
+            
+         
+  {% if template contains 'collection' %} 
+  <!-- this section looks for if the collection contains a colour or size, if so reorders title -->   
+    {% assign firsttag = collections[current_tags.first].handle %}
+    {% if firsttag == 'animal' or firsttag == 'beige' or firsttag == 'blacks' or firsttag == 'blues' or firsttag == 'browns' or firsttag == 'cream' or firsttag == 'floral' or firsttag == 'greens' or firsttag == 'greys' or firsttag == 'metalics' or firsttag == 'multi' or firsttag == 'oranges' or firsttag == 'pinks' or firsttag == 'purples' or firsttag == 'reds' or firsttag == 'spots' or firsttag == 'stripes' or firsttag == 'white' or firsttag == 'yellows' or firsttag == 'size-size-6' or firsttag == 'size-size-8' or firsttag == 'size-size-10' or firsttag == 'size-size-12' or firsttag == 'size-size-14' or firsttag == 'size-size-16' or firsttag == 'size-size-18' or firsttag == 'size-size-20' or firsttag == 'size-extra-small' or firsttag == 'size-small' or firsttag == 'size-medium' or firsttag == 'size-large' or firsttag == 'size-extra-large' %}
+    {% assign collectioniscolour = true %}
+    {% endif %}
+
+    {% assign currenttags = current_tags | join: ',' %}
+    {% if currenttags contains ',' %}
+    {% assign collectioniscolour = false %}
+    {% endif %}
+  {% endif %}               
+            
+  {% if collectioniscolour == true %}
+  <!-- this section assigns the title if its idetified above as a colour -->   
+    {% capture seo_title %}
+      {%- unless page_title contains shop.name -%}
+        {{collections[current_tags.first].title}} {{ collection.title}} | {{ shop.name }}
+    {%- endunless -%}
+      {%- if current_page != 1 -%}
+        &nbsp;&ndash; {{ 'general.meta.page' | t: page: current_page }} 
+      {%- endif -%}
+  {% endcapture %} 
+  {% endif %}
+              
+  {% if template contains 'blog' %}
+  <!-- Blog title -->   
+    {% if blog.handle == 'blog' %}
+      {% capture seo_title %}
+      {{page_title}}{% if current_tags | first != '' %}&nbsp;&ndash;&nbsp;{{current_tags}}{% endif %} | {{ shop.name }}
+      {% if current_page != 1 %}&nbsp;&ndash; {{ 'general.meta.page' | t: page: current_page }}
+      {% endif %}
+      {% endcapture %} 
+    {% endif %} 
+  {% endif %}   
+            
+  <title>{{ seo_title | strip_newlines }}</title>

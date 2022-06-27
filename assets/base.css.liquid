@@ -2136,7 +2136,7 @@ input[type='checkbox'] {
 
 /* section-announcement-bar */
 #shopify-section-announcement-bar {
-  z-index: 4;
+  z-index: 999;
 }
 
 .announcement-bar-wrapper{
@@ -3545,9 +3545,15 @@ progress-bar .progress-bar-container{
   z-index: 6; 
   position:absolute; 
   width: 100%;
-  display: flex; 
+  display: none; 
   flex-wrap: wrap;
   bottom: 0px;
+}
+
+@media screen and (min-width: 1100px){
+  .card__inner:hover .card-quick-view--wrapper{
+    display: flex; 
+  }
 }
 
 .quick-view--item{
@@ -3615,9 +3621,7 @@ progress-bar .progress-bar-container{
   font-weight: 300; 
   letter-spacing: 0; 
   text-transform: uppercase;
-  background-color: rgba(200,200,200, 0.3);
   display: inline-block;
-  padding: 0 5px;
 }
 
 

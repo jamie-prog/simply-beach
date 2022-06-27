@@ -6,7 +6,7 @@
 
 {% unless product.object_type == 'product' %}{% continue %}{% endunless %}
 {% assign productsfound = productsfound | plus: 1 %}
-<div id="mp-{{product.handle}}" {% if productsfound > 1 %}class="multiproductsfound"{% endif %}>
+<div id="mp-{{product.handle}}" class="multiproductsfound matching-product-item" data-product-handle="{{product.handle}}">
   <a href="{{product.url}}"><img src="{{product.featured_image.src | img_url: '226x' }}" srcset="{{ product.featured_image.src | img_url: '452x' }} 2x" alt="{{product.vendor}} {{product.title}}" loading="lazy"/></a>
   <h3 class="grid-view-item__vendor">{{product.vendor}}</h3>
   <h6 class="grid-view-item__title">{{product.title}}</h6>

@@ -1,0 +1,102 @@
+{% assign multistore = settings.multistore %}
+{% assign noindexpage = false %}
+
+{% if template contains 'collection' %}
+
+{% comment %}
+
+indexdepartments - These are used to define departments we explicitly wish to index.
+indexagainstbrand - These are filters we wish to keep in conjunction with brands. They're all included in the type filter dropdown for simplicity, e.g. /speedo/womens-swimwear
+
+{% endcomment %}
+
+{% assign indexdepartments = collection.metafields.seorules.indexcollection %}
+{% assign indexagainstbrand = collections[current_tags.first].metafields.seorules.indexagainstbrand %}
+{% assign vendornames = collection.all_vendors | downcase | replace: ' ', '-' %} {% assign indexedagainstbrand = false %}
+  
+
+  {% if vendornames contains collection.handle %}
+  {% comment %}This section identifies brands and how they operate{% endcomment %}
+      <!--I'm a brand-->  
+        {% if current_tags == blank %}
+            <!--and I have no filters applied - index me-->
+        {% elsif current_tags != blank  %}
+          {% if current_tags[1] != blank %}
+              <!--and I have multiple filters applied - so no index me-->
+              {% assign noindexpage = true %}
+          {% else %}
+            {% if indexagainstbrand == 'true' %}
+                  {% assign indexedagainstbrand = true %}
+            {% endif %}
+            {% if indexedagainstbrand == true %}
+              <!--and I have a department which in combination with any brand we wish to keep - index me-->
+              {% if collection.products_count == 0 %}
+                <!--however I have no stock - so no index me-->
+              {% assign noindexpage = true %}
+              {% endif %}
+            {% else %}
+              <!--and I have filters applied that we don't wish to keep - so no index me-->
+            {% assign noindexpage = true %}
+            {% endif %}
+          {% endif %}
+        {% endif %}
+    {% else %}
+  {% comment %}This section identifies departments and how they operate, no index unless specified otherwise{% endcomment %}
+  <!-- I'm a department we've not identified whether we wish to keep - no index me -->
+  {% assign noindexpage = true %}
+      {% if indexdepartments == 'true' %}
+          {% assign noindexpage = false %}
+            {% if current_tags == blank %}
+                <!--I'm a department, I have no filters applied (do nothing, inherit indexation) -->
+                {% else %}
+                {% if current_tags[1] != blank %}
+                    <!--I'm a department, I have multiple filters applied - so no index me-->
+                    {% assign noindexpage = true %}
+                        {% else %}
+                          {% for keep in keepfilter %}
+                            {% if collections[current_tags.first].handle == keep %}
+                                {% assign keepfilter = true %}
+                                {% break %}
+                            {% endif %}
+                          {% endfor %}
+                          {% if keepfilter == true %}
+                            <!--I'm a department, I have a filter applied that we wish to index in conjunction with a department - index me-->
+                            {% assign noindexpage = false %}
+                          {% else %}
+                            <!--I'm a department and I have filters applied that we don't wish to keep - so no index me-->
+                            {% assign noindexpage = true %}
+                          {% endif %}
+                 {% endif %}
+            {% endif %}
+      {% endif %}
+    {% endif %}
+
+{% if collection.handle == 'all' %}
+  <!-- I'm Shopifys default all page - no index me --> 
+  {% assign noindexpage = true %}   
+{% endif %}
+
+{% endif %}
+
+{% if shop.name contains 'iskube' %}
+  <!-- I'm the development site - no index me --> 
+  {% assign noindexpage = true %} 
+{% endif %}  
+                                     
+{% if page.url contains 'search-results-page' %}
+  <!-- I'm a search results page - no index me --> 
+  {% assign noindexpage = true %}
+{% endif %}  
+
+{%comment%}blues as primary department clashed with blueseventy on swim, this fixes that issue{%endcomment%}
+{% if collection.handle == 'blues' %}
+   {% assign noindexpage = true %} 
+{% endif %}  
+
+{% if template contains 'cart' %}
+   {% assign noindexpage = true %} 
+{% endif %}
+
+{% if noindexpage == true %} 
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW, NOARCHIVE">      
+{% endif %}

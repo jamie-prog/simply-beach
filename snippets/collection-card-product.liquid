@@ -147,7 +147,7 @@
             </a>
           </div>
           <div class="card-information">
-            {% render 'price', product: card_product, price_class: 'card-item--price' %}
+            {% render 'collection-card-price', product: card_product, price_class: 'card-item--price' %}
             {%- if show_rating -%}
             {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: card_product %}
             {%- endif -%}
