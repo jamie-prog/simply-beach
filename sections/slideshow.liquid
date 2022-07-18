@@ -1,10 +1,10 @@
-{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
-{{ 'component-slider.css' | asset_url | stylesheet_tag }}
-{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" data-href="{{'section-image-banner.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{'component-slider.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{'component-slideshow.css' | asset_url }}">
 
 
 {%- if section.settings.slide_height == 'adapt_image' and section.blocks.first.settings.image != blank -%}
-  {%- style -%}
+  <style>
   @media screen and (max-width: 749px) {
     #Slider-{{ section.id }}::before,
     #Slider-{{ section.id }} .media::before,
@@ -23,7 +23,7 @@
       display: block;
     }
   }
-  {%- endstyle -%}
+  </style>
 {%- endif -%}
 
 <slideshow-component class="slider-mobile-gutter{% if section.settings.layout == 'grid' %} page-width{% endif %}{% if section.settings.show_text_below %} mobile-text-below{% endif %}" role="region" aria-roledescription="{{ 'sections.slideshow.carousel' | t }}" aria-label="{{ section.settings.accessibility_info | escape }}">
@@ -97,7 +97,7 @@
               {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
               sizes="100vw"
               src="{{ block.settings.image | image_url: width: 1500 }}"
-              loading="lazy"
+              {% unless forloop.first %}loading="lazy"{% endunless %}
               alt="{{ block.settings.image.alt | escape }}"
               width="{{ block.settings.image.width }}"
               height="{{ block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round }}"

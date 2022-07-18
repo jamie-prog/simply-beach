@@ -24,7 +24,8 @@ if (!customElements.get('quick-add-modal')) {
         .then((responseText) => {
           const responseHTML = new DOMParser().parseFromString(responseText, 'text/html');
           this.productElement = responseHTML.querySelector('section[id^="MainProduct-"]');
-          this.preventDuplicatedIDs();
+          console.log(this.productElement);
+          // this.preventDuplicatedIDs();
           this.removeDOMElements();
           this.setInnerHTML(this.modalContent, this.productElement.innerHTML);
           

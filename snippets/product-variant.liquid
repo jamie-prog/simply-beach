@@ -216,3 +216,55 @@
         {% endif %}
     </span>
 {% endif %}
+
+<script>
+    let optionSelectors = document.querySelectorAll(".option-product"); 
+    let currentDate = new Date();
+    optionSelectors.forEach((optionSelector) => {
+        let stockamount = optionSelector.dataset.stockamount; 
+        let duedate = optionSelector.dataset.duedate;
+        
+        if (stockamount == 0 && duedate == "discontinued//" ) {
+            let varianttype = optionSelector.dataset.varianttype;
+            if (varianttype == "single-novariant") {
+                var introText = "Out of Stock - ";
+            } else {
+                var introText = "";
+            }
+            
+            var dueSoonValue = introText + ("Discontinued");            
+            var text = optionSelector.textContent;
+            optionSelector.innerText = text.replace('Out of Stock', dueSoonValue);
+                    
+        } else if (stockamount == 0 && duedate != "//" ) {
+            
+            var productDate = new Date(duedate);
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+            const d = new Date(duedate);
+
+            var productDay = productDate.getDate();
+            
+            if (productDay == 1 || productDay == 21 || productDay == 31) {var dateExtension = "st";}
+            if (productDay == 4 || productDay == 5 || productDay == 6 || productDay == 7 || productDay == 8 || productDay == 9 || productDay == 10 || productDay == 11 || productDay == 12 || productDay == 13 || productDay == 14 || productDay == 15 || productDay == 16 || productDay == 17 || productDay == 18 || productDay == 19 || productDay == 20 || productDay == 24 || productDay == 25 || productDay == 26 || productDay == 27 || productDay == 28 || productDay == 29 || productDay == 30) {var dateExtension = "th";}
+            if (productDay == 2 || productDay == 22) {var dateExtension = "nd";}
+            if (productDay == 3 || productDay == 23) {var dateExtension = "rd";}
+            
+            var varianttype = optionSelector.dataset.varianttype;
+            if (varianttype == "single-novariant") {
+                var introText = "Out of Stock - ";
+            } else {
+                var introText = "";
+            }
+            var dueSoonValue = introText + ("Due ") + productDay + dateExtension + (" ") + monthNames[d.getMonth()];
+
+            if (productDate.getTime() > currentDate.getTime()) {
+                var text = optionSelector.innerHTML;
+                optionSelector.innerHTML = text.replace('Out of Stock', dueSoonValue);
+            } else {
+                // do nothing
+            }
+            
+            };
+    })
+</script>

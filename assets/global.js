@@ -987,6 +987,7 @@ class UpsellVariant extends HTMLElement{
   }
 
   updatePrice(){
+    console.log(this.selectedVariant.price);
     this.salePriceEl.textContent = Shopify.formatMoney(this.selectedVariant.price, window.MoneyFormat);
     if(this.selectedVariant.compare_at_price > this.selectedVariant.price){
       if(!this.comparePriceEl){

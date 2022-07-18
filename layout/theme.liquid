@@ -249,17 +249,26 @@
         }
       }
     {% endstyle %}
-    {%- comment -%}
-    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
-    {%- endcomment -%}
+    <!-- Add Critical CSS -->
+    {% render 'critical-css-global' %}
+    {%- case template -%}
+      {%- when 'index' -%}
+        {% render 'critical-css-home' %}
+      {%- when 'product' -%}
+        {% render 'critical-css-product' %}
+      {%- when 'collection' -%}
+        {% render 'critical-css-collection' %}
+    {%- endcase -%}
+    {% if template == 'home' %}
+    {% endif %}
     <!-- Slick css -->
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" data-href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" data-href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
     <!-- Base CSS -->
-    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" data-href="{{ 'base.css' | asset_url }}">
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -269,18 +278,21 @@
     {%- endunless -%}
 
     {%- if settings.predictive_search_enabled -%}
-      <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" data-href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
     {%- endif -%}
     
     <!-- Include jQuery  -->
-    <script 
-    src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
+    <script type="lazyload2" class="lazyload2"
+    data-src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
     <!-- Include Slick -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
-
+    <script type="lazyload2" class="lazyload2" data-src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
+    <script type="lazyload2" class="lazyload2" data-src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%}
     {{ content_for_header }}
-
+    {%- endcomment -%}
+    {%- comment -%}{%- endcomment -%}
+    {{ content_for_header | replace : "addEventListener('load'", "addEventListener('wnw_load'" | replace : "previewBarInjector.init();", "" | replace : 'defer="defer" src=', 'type="lazyload2" class="lazyload2" defer="defer" data-src=' | replace : 'DOMContentLoaded', 'wnw_load' }}
+      
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
     if (Shopify.designMode) {
       document.documentElement.classList.add('shopify-design-mode');
@@ -333,11 +345,11 @@
         pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
         playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
       },
-      window.MoneyFormat = "{{shop.money_format}}"
+      window.MoneyFormat = "{{shop.money_format | strip_html}}"
     </script>
 
     {%- if settings.predictive_search_enabled -%}
-      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+      <script type="lazyload2" class="lazyload2" data-src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     <!--   BING SCRIPT TAG -->
@@ -361,47 +373,48 @@
     </script>
     <!--  End BING SCRIPT TAG -->
     
-    {%- if template.name == 'product' and product.tags contains 'BIS' -%}
-      <script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
-      <script>
-          var klaviyo = klaviyo || [];
-          klaviyo.init({
-            account: "TAr4JY",
-            platform: "shopify",
-            include_on_tags: "BIS",
-            list: "QYTmNL"
-          });
-          klaviyo.enable("backinstock",{ 
-          trigger: {
-            product_page_text: "NOTIFY ME WHEN AVAILABLE",
-            product_page_class: "button",
-            product_page_text_align: "center",
-            product_page_margin: "0px 0px 10px 0px",
-            product_page_width: "100%",
-            alternate_anchor: "backinstock",
-            replace_anchor: false
-          },
-          modal: {
-          headline: "{product_name}",
-          body_content: "Register to receive a notification when this item comes back in stock.",
-          email_field_label: "Email",
-          button_label: "Notify me when available",
-          subscription_success_label: "We'll let you know when it's available again.",
-          footer_content: '',
-          additional_styles: "@import url('https://fonts.googleapis.com/css?family=Helvetica+Neue');",
-          drop_background_color: "#000",
-          background_color: "#fff",
-          text_color: "#222",
-          button_text_color: "#fff",
-          button_background_color: "#000",
-          close_button_color: "#ccc",
-          error_background_color: "#fcd6d7",
-          error_text_color: "#C72E2F",
-          success_background_color: "#000",
-          success_text_color: "#fff"
-          }
+    
+    <script class="lazyload2" type="lazyload2" data-src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+    <script class="lazyload2" type="lazyload2">
+        var klaviyo = klaviyo || [];
+        klaviyo.init({
+          account: "TAr4JY",
+          platform: "shopify",
+          include_on_tags: "BIS",
+          list: "QYTmNL"
         });
-      </script>
-    {%- endif -%}
+        klaviyo.enable("backinstock",{ 
+        trigger: {
+          product_page_text: "NOTIFY ME WHEN AVAILABLE",
+          product_page_class: "button",
+          product_page_text_align: "center",
+          product_page_margin: "0px 0px 10px 0px",
+          product_page_width: "100%",
+          alternate_anchor: "backinstock",
+          replace_anchor: false
+        },
+        modal: {
+        headline: "{product_name}",
+        body_content: "Register to receive a notification when this item comes back in stock.",
+        email_field_label: "Email",
+        button_label: "Notify me when available",
+        subscription_success_label: "We'll let you know when it's available again.",
+        footer_content: '',
+        additional_styles: "@import url('https://fonts.googleapis.com/css?family=Helvetica+Neue');",
+        drop_background_color: "#000",
+        background_color: "#fff",
+        text_color: "#222",
+        button_text_color: "#fff",
+        button_background_color: "#000",
+        close_button_color: "#ccc",
+        error_background_color: "#fcd6d7",
+        error_text_color: "#C72E2F",
+        success_background_color: "#000",
+        success_text_color: "#fff"
+        }
+      });
+    </script>
+    
+    {% render 'optimize-js' %}    
   </body>
 </html>

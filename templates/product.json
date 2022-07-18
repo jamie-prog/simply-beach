@@ -50,11 +50,9 @@
           "type": "start-div",
           "settings": {}
         },
-        "d10d88de-5968-4334-bf2f-5dc363585885": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<div data-app=\"eastsideco_sizeGuides\"\n     data-shop=\"{{ shop.permanent_domain }}\"\n     data-tags=\"{{ product.tags | join:',' | escape }}\"\n     data-metafields=\"{{ product.metafields.esc-size-matters.tag }}\"\n     data-popup=\"link\">\n<\/div>"
-          }
+        "741b262b-1126-41c3-aa19-d8c9a06af673": {
+          "type": "sizeguide",
+          "settings": {}
         },
         "89b99f71-3548-4b7d-84e2-8e5073263e31": {
           "type": "shopify:\/\/apps\/wishlist\/blocks\/app-block\/7f9269b0-1b45-4d0c-8479-faf04f05d8ac",
@@ -98,7 +96,7 @@
         "variant_picker",
         "buy_buttons",
         "dcd7da34-62b8-4d0b-9fc2-6c32cfe09eed",
-        "d10d88de-5968-4334-bf2f-5dc363585885",
+        "741b262b-1126-41c3-aa19-d8c9a06af673",
         "89b99f71-3548-4b7d-84e2-8e5073263e31",
         "72508cb6-a036-4bb8-ba81-0f41a05810fd",
         "a13a1184-4a80-42b8-9247-f5c7a9804832"

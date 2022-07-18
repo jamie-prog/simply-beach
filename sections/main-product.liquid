@@ -1,12 +1,12 @@
 <section id="MainProduct-{{ section.id }}" class="page-width section-{{ section.id }}-padding" data-section="{{ section.id }}">
-  {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
-  {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
-  {{ 'component-price.css' | asset_url | stylesheet_tag }}
-  {{ 'component-rte.css' | asset_url | stylesheet_tag }}
-  {{ 'component-slider.css' | asset_url | stylesheet_tag }}
-  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
-  {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
-  {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  <link rel="stylesheet" data-href="{{'section-main-product.css' | asset_url }}">
+  <link rel="stylesheet" data-href="{{'component-accordion.css' | asset_url }}">
+  <link rel="stylesheet" data-href="{{'component-price.css' | asset_url }}">
+  <link rel="stylesheet" data-href="{{'component-rte.css' | asset_url }}">
+  <link rel="stylesheet" data-href="{{'component-slider.css' | asset_url }}">
+  <link rel="stylesheet" data-href="{{'component-rating.css' | asset_url }}">
+  <link rel="stylesheet" data-href="{{'component-loading-overlay.css' | asset_url }}">
+  <link rel="stylesheet" data-href="{{'component-deferred-media.css' | asset_url }}">
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -21,7 +21,7 @@
       }
     }
   {%- endstyle -%}
-  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script type="lazyload2" class="lazyload2" data-src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
   {%- if first_3d_model -%}
     {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
@@ -137,7 +137,7 @@
                         alt="{{ featured_media.alt | escape }}"
                         height="208"
                         width="208"
-                        loading="lazy"
+                        
                       >
                     </button>
                   </li>
@@ -396,7 +396,7 @@
                   </div>
                 </details>
               </share-button>
-              <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
+              <script type="lazyload2" class="lazyload2" data-src="{{ 'share.js' | asset_url }}" defer="defer"></script>
             {%- when 'variant_picker' -%}
               {%- if block.settings.show_only_single_option_selector -%}
                 <variant-selects class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" data-is-origin = "true" {{ block.shopify_attributes }}>
@@ -521,6 +521,9 @@
                   {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                     <input type="hidden" name="id" disabled value="{{product.selected_or_first_available_variant.id}}">
                     <div class="product-form__buttons">
+                      {%- if product.tags contains 'BIS' and product.available == false -%}
+                          <a href="javascript:void(0)" class="button button--full-width klaviyo-bis-trigger" style="text-transform: uppercase; margin-bottom: 10px; ">Notify Me When Available...</a>
+                      {%- endif -%}
                       <button
                         type="submit"
                         name="add"
@@ -540,17 +543,20 @@
                             </svg>
                           </div>
                       </button>
+
                       {%- if product.tags contains 'BIS' -%}
                         <div class="backinstock-btn--wrapper" id="backinstock"></div>
                       {%- endif -%}
+
                       {%- if block.settings.show_dynamic_checkout -%}
                         {{ form | payment_button }}
                       {%- endif -%}
                     </div>
                   {%- endform -%}
                 </product-form>
-  
-                {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
+                
+
+                <link rel="stylesheet" data-href="{{'component-pickup-availability.css' | asset_url }}">
   
                 {%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities | where: 'pick_up_enabled', true -%}
   
@@ -571,7 +577,7 @@
                   </template>
                 </pickup-availability>
               </div>
-              <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
+              <script type="lazyload2" class="lazyload2" data-src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
             {%- when 'rating' -%}
               {%- if product.metafields.reviews.rating.value != blank -%}
                 {% liquid
@@ -684,15 +690,15 @@
   {%- endfor -%}
 
   {%- if product.media.size > 0 -%}
-    <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
+    <script type="lazyload2" class="lazyload2" data-src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
+    <script type="lazyload2" class="lazyload2" data-src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
   {%- if first_3d_model -%}
     <script type="application/json" id="ProductJSON-{{ product.id }}">
       {{ product.media | where: 'media_type', 'model' | json }}
     </script>
-    <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+    <script type="lazyload2" class="lazyload2" data-src="{{ 'product-model.js' | asset_url }}" defer></script>
   {%- endif -%}
 
   <script>

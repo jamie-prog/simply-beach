@@ -1,0 +1,66 @@
+{% capture heartIcon %}<svg width="19px" height="18px" viewBox="0 0 19 18" version="1.1"><g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Collection/Product-grid-item2" transform="translate(-164.000000, -287.000000)" fill="#FFFFFF"><g id="Collection/Product-grid-item"><g id="icon/heart" transform="translate(163.571027, 284.573311)"><path d="M17.0401497,4.64217938 C18.0141129,5.64478856 18.5010872,6.86938569 18.5010872,8.3160075 C18.5010872,9.76262932 18.0141129,10.9872264 17.0401497,11.9898356 L9.56358715,19.7671794 L2.08702465,11.9898356 C1.11306145,10.9872264 0.626087152,9.76262932 0.626087152,8.3160075 C0.626087152,6.86938569 1.11306145,5.64478856 2.08702465,4.64217938 C2.94640395,3.72550813 3.9991278,3.26717938 5.24522778,3.26717938 C6.49132776,3.26717938 7.54405161,3.72550813 8.4034309,4.64217938 L9.56358715,5.84530438 L10.7667122,4.64217938 C11.6260914,3.72550813 12.6716539,3.26717938 13.9034309,3.26717938 C15.1352079,3.26717938 16.1807704,3.72550813 17.0401497,4.64217938 Z"></path></g></g></g></g></svg>{% endcapture %}
+
+{% if iwish_v2 == 'iwishlink' %}
+<a class="iWishView site-header__wishlist" href="/apps/iwish">{% include 'icon-heart' %}<span class="iWishCount {% if cart.item_count == 0 %}hide{% endif; %}">0</span><div class="iWish-Text"></div></a>
+{% elsif iwish_v2 == 'iwishproduct' %}
+<div class="iwishAddWrap">
+	<a class="product-single__wishlist iwishcheck" href="#" data-product="{{ product.id }}" data-variant="{{ product.variants.first.id }}" data-pTitle="{{ product.title | escape }}">{{heartIcon}}</a>
+</div>
+{% elsif iwish_v2 == 'iwishCollection' %}
+	<a class="iWishAddColl iwishcheck product-single__wishlist quickview__wish" href="#" data-variant="{{ product.variants.first.id }}" data-product="{{ product.id }}" data-pTitle="{{ product.title | escape }}">{{heartIcon}}</a>
+{% elsif iwish_v2 == 'iwishfooter' %}
+<script type="text/javascript" defer="defer">
+              
+var iwish_shop = "{{ shop.permanent_domain }}";
+var iwish_pro_template = {% if template contains 'product' %}true{% else %}false{% endif %};
+var iwish_cid = "{{ customer.id }}";
+//Add to Wishlist - Product Page Text
+var iwish_added_txt = '{{heartIcon}}';
+var iwish_add_txt = '';
+//Add to Wishlist - Collection Page Text
+var iwish_added_txt_col = '{{heartIcon}}';
+var iwish_add_txt_col = '';
+//Quick View - Classes
+var iwish_qvButton = 'a[href="#quickview"]';
+var iwish_qvWrapper = '.quickview-overlay.modal--is-active';
+</script>
+<script src="https://cdn.myshopapps.com/iwish/iwishlist.js" defer="defer"></script>
+<script type="text/javascript" defer="defer">
+  function iwishCheckColl(){
+	if(jQuery(".iwishcheck").length > 0) {
+      jQuery(".iwishcheck").each(function() {
+          var iWishvId = jQuery(this).attr("data-variant");
+          var iWishpId = jQuery(this).attr("data-product");
+          if(isInWishlist(iWishpId,iWishvId)){ 
+            jQuery(this).addClass("iwishAdded").html(iwish_added_txt_col); 
+          }
+          jQuery(this).removeClass("iwishcheck");
+      });
+	}
+}
+  
+jQuery( document ).ready(function() {
+	jQuery("a[href='/apps/iwish']").on('click', function(e) {
+		if(typeof(Storage) !== "undefined") {
+			e.preventDefault();
+			iWishPost('/apps/iwish',{iwishlist:JSON.stringify(iWishlistmain),cId:iwish_cid});
+
+		}
+	});
+	jQuery(".product-single__wishlist").on('click', function() {
+      	console.log("PC ADDING TO WISHLIST");
+		var iWishvId = jQuery(this).parents(iwishWrapperClass).find(iWishVarSelector).val();
+		iwish_add(jQuery(this), iWishvId);
+		return false;
+	});
+	jQuery(".iWishAddColl").click(function() {
+      	console.log("PC .iWishAddColl clicked");
+		var iWishvId = jQuery(this).attr("data-variant");
+	   	iwish_addCollection(jQuery(this),iWishvId);
+	  	return false;
+	});
+	iwishCheckColl();
+});
+
+</script>
+{% endif %}

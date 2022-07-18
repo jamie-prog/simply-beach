@@ -17,7 +17,6 @@
             "box_align": "middle-center",
             "show_text_box": true,
             "text_alignment": "center",
-            "image_overlay_opacity": 0,
             "color_scheme": "background-1",
             "text_alignment_mobile": "center",
             "banner1_tooltip_show": true,
@@ -43,7 +42,6 @@
             "box_align": "middle-center",
             "show_text_box": true,
             "text_alignment": "center",
-            "image_overlay_opacity": 0,
             "color_scheme": "background-1",
             "text_alignment_mobile": "center",
             "banner1_tooltip_show": true,
@@ -69,7 +67,6 @@
             "box_align": "middle-center",
             "show_text_box": true,
             "text_alignment": "center",
-            "image_overlay_opacity": 0,
             "color_scheme": "background-1",
             "text_alignment_mobile": "center",
             "banner1_tooltip_show": true,
@@ -95,7 +92,6 @@
             "box_align": "middle-center",
             "show_text_box": true,
             "text_alignment": "center",
-            "image_overlay_opacity": 0,
             "color_scheme": "background-1",
             "text_alignment_mobile": "center",
             "banner1_tooltip_show": true,
@@ -341,12 +337,11 @@
     },
     "16538663589bb9e9a4": {
       "type": "apps",
-      "disabled": true,
       "blocks": {
         "447f65b1-0425-4f73-9de7-62d01efb822e": {
           "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/form-embed-block\/2632fe16-c075-4321-a88b-50b567f42507",
           "settings": {
-            "formId": "VSBhZM"
+            "formId": "ThXwTM"
           }
         }
       },

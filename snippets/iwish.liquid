@@ -1,0 +1,13 @@
+{% if iwish == 'iwishhead' %}
+	<script>
+	  var iwish_template='{{template}}';
+	  var iwish_cid='{{ customer.id }}';
+	</script>
+	{{ 'iwishHeader.js ' | asset_url | script_tag }}
+{% elsif iwish == 'iwishlink' %}
+	<a class="iWishView" href="#" data-customer-id="{% if customer %}{{ customer.id }}{% else %}0{% endif %}">Wishlist</a>
+{% elsif iwish == 'iwishproduct' %}
+	<a class="iWishAdd" href="#" data-customer-id="{% if customer %}{{ customer.id }}{% else %}0{% endif %}" data-product="{{ product.id }}">Add to wishlist</a> 
+{% elsif iwish == 'iwishfooter' %}
+	{{ 'iwish.js ' | asset_url | script_tag }}
+{% endif %}
